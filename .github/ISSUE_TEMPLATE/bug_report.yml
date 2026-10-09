@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible Seekdex issue with synthetic files.
+body:
+  - type: markdown
+    attributes:
+      value: "Do not attach private photos, databases, credentials or unredacted paths. Security issues should be reported privately; see SECURITY.md."
+  - type: input
+    id: version
+    attributes:
+      label: Seekdex version and Windows version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps, expected result and actual result
+      description: Use synthetic examples. State backend and package edition when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted error and logs

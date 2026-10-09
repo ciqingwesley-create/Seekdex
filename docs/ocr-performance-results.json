@@ -1,0 +1,369 @@
+[
+  {
+    "requested_backend": "ort-cpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det1536-v1",
+    "max_side": 2048,
+    "images": 27,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 0.8294384000000719,
+    "warmup_s": 1.8384517999984382,
+    "total_s": 56.15887490000023,
+    "sqlite_integrity": "ok",
+    "input_s": 4.5237317999963125,
+    "detection_s": 49.250580100011575,
+    "recognition_s": 1.7134364000012283,
+    "database_s": 0.014418499999010237,
+    "actual_backend": "ort-cpu",
+    "device": "ONNXRuntime CPU",
+    "fallback": "",
+    "successful": 27,
+    "pictures_s": 0.4807788626121477,
+    "peak_ram_mib": 938.9921875,
+    "file": "ort-cpu-small-2048.json",
+    "quality": {
+      "keywords": 65,
+      "normalized_keyword_hits": 65,
+      "exact_keyword_hits": 59,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 0.9076923076923077,
+      "recall_at_k": {
+        "1": 0.46666666666666656,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 25
+    },
+    "min_text_agreement": 1.0,
+    "mean_text_agreement": 1.0
+  },
+  {
+    "requested_backend": "ort-cpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det2000-v1",
+    "max_side": 2048,
+    "images": 26,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 0.7597437999993417,
+    "total_s": 51.67925020000075,
+    "sqlite_integrity": "ok",
+    "input_s": 4.443479200002912,
+    "detection_s": 45.21488280000267,
+    "recognition_s": 1.376585599995451,
+    "database_s": 0.027277799998046248,
+    "actual_backend": "ort-cpu",
+    "device": "ONNXRuntime CPU",
+    "fallback": "",
+    "successful": 26,
+    "pictures_s": 0.5031032745130583,
+    "peak_ram_mib": 953.31640625,
+    "file": "ort-small-2048.json",
+    "quality": {
+      "keywords": 60,
+      "normalized_keyword_hits": 60,
+      "exact_keyword_hits": 54,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 0.9,
+      "recall_at_k": {
+        "1": 0.3333333333333332,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 20
+    },
+    "min_text_agreement": 1.0,
+    "mean_text_agreement": 1.0
+  },
+  {
+    "requested_backend": "ov-auto",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det1536-v1",
+    "max_side": 2048,
+    "images": 27,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 2.4071481000028143,
+    "warmup_s": 2.8857779999998456,
+    "total_s": 72.23424250000244,
+    "sqlite_integrity": "ok",
+    "input_s": 4.826495499997691,
+    "detection_s": 60.83312380000643,
+    "recognition_s": 5.769299500010675,
+    "database_s": 0.013280999999551568,
+    "actual_backend": "ov-auto",
+    "device": "OpenVINO AUTO ((CPU), GPU.0)",
+    "fallback": "",
+    "successful": 27,
+    "pictures_s": 0.3737839432593079,
+    "peak_ram_mib": 2833.234375,
+    "file": "ov-auto-small-2048.json",
+    "quality": {
+      "keywords": 65,
+      "normalized_keyword_hits": 65,
+      "exact_keyword_hits": 59,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 0.9076923076923077,
+      "recall_at_k": {
+        "1": 0.46666666666666656,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 25
+    },
+    "min_text_agreement": 1.0,
+    "mean_text_agreement": 1.0
+  },
+  {
+    "requested_backend": "ov-cpu",
+    "model_id": "ppocrv6-medium-92078b73-eef44482-rgb-exif-long2048-det1536-v1",
+    "max_side": 2048,
+    "images": 10,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 2.6453137999997125,
+    "warmup_s": 2.2079843999999866,
+    "total_s": 22.696932800001377,
+    "sqlite_integrity": "ok",
+    "input_s": 1.1815687999987858,
+    "detection_s": 19.564200000007986,
+    "recognition_s": 1.7589886999921873,
+    "database_s": 0.010324200004106387,
+    "actual_backend": "ov-cpu",
+    "device": "OpenVINO CPU (CPU)",
+    "fallback": "",
+    "successful": 10,
+    "pictures_s": 0.44058816616839935,
+    "peak_ram_mib": 2133.5234375,
+    "file": "ov-cpu-medium-2048-resize.json",
+    "quality": {
+      "keywords": 21,
+      "normalized_keyword_hits": 21,
+      "exact_keyword_hits": 21,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 1.0,
+      "recall_at_k": {
+        "1": 0.6805555555555555,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 12
+    },
+    "min_text_agreement": 0.0,
+    "mean_text_agreement": 0.885207100591716
+  },
+  {
+    "requested_backend": "ov-cpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long1024-det1024-v1",
+    "max_side": 1024,
+    "images": 10,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 1.159251299999596,
+    "warmup_s": 0.318521299999702,
+    "total_s": 2.943728900001588,
+    "sqlite_integrity": "ok",
+    "input_s": 0.8027179000018805,
+    "detection_s": 1.566439199999877,
+    "recognition_s": 0.5138831000003847,
+    "database_s": 0.009371000000101048,
+    "actual_backend": "ov-cpu",
+    "device": "OpenVINO CPU (CPU)",
+    "fallback": "",
+    "successful": 10,
+    "pictures_s": 3.3970519499926115,
+    "peak_ram_mib": 744.2109375,
+    "file": "ov-cpu-small-1024-resize.json",
+    "quality": {
+      "keywords": 21,
+      "normalized_keyword_hits": 21,
+      "exact_keyword_hits": 21,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 1.0,
+      "recall_at_k": {
+        "1": 0.6805555555555555,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 12
+    },
+    "min_text_agreement": 0.0,
+    "mean_text_agreement": 0.9
+  },
+  {
+    "requested_backend": "ov-cpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long1536-det1536-v1",
+    "max_side": 1536,
+    "images": 10,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 1.1351509999985865,
+    "warmup_s": 0.5430162999982713,
+    "total_s": 5.273044699999446,
+    "sqlite_integrity": "ok",
+    "input_s": 1.0404353999947489,
+    "detection_s": 3.5666713999999047,
+    "recognition_s": 0.5493594000072335,
+    "database_s": 0.00930270000026212,
+    "actual_backend": "ov-cpu",
+    "device": "OpenVINO CPU (CPU)",
+    "fallback": "",
+    "successful": 10,
+    "pictures_s": 1.8964375553275798,
+    "peak_ram_mib": 984.82421875,
+    "file": "ov-cpu-small-1536-resize.json",
+    "quality": {
+      "keywords": 21,
+      "normalized_keyword_hits": 21,
+      "exact_keyword_hits": 21,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 1.0,
+      "recall_at_k": {
+        "1": 0.6805555555555555,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 12
+    },
+    "min_text_agreement": 0.3333333333333333,
+    "mean_text_agreement": 0.9333333333333333
+  },
+  {
+    "requested_backend": "ov-cpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det1536-v1",
+    "max_side": 2048,
+    "images": 10,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 1.1510651999997208,
+    "warmup_s": 0.7397154999998747,
+    "total_s": 7.8900116000004346,
+    "sqlite_integrity": "ok",
+    "input_s": 1.166357700003573,
+    "detection_s": 5.994158299999981,
+    "recognition_s": 0.5439900000019406,
+    "database_s": 0.00544149999768706,
+    "actual_backend": "ov-cpu",
+    "device": "OpenVINO CPU (CPU)",
+    "fallback": "",
+    "successful": 10,
+    "pictures_s": 1.267425259552147,
+    "peak_ram_mib": 1308.15625,
+    "file": "ov-cpu-small-2048-resize.json",
+    "quality": {
+      "keywords": 21,
+      "normalized_keyword_hits": 21,
+      "exact_keyword_hits": 21,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 1.0,
+      "recall_at_k": {
+        "1": 0.6805555555555555,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 12
+    },
+    "min_text_agreement": 1.0,
+    "mean_text_agreement": 1.0
+  },
+  {
+    "requested_backend": "ov-cpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det1536-v1",
+    "max_side": 2048,
+    "images": 27,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 1.194737099998747,
+    "warmup_s": 0.774565600000642,
+    "total_s": 34.29306340000039,
+    "sqlite_integrity": "ok",
+    "input_s": 4.972553399999015,
+    "detection_s": 26.50810200001797,
+    "recognition_s": 2.0472066000002087,
+    "database_s": 0.01936299999943003,
+    "actual_backend": "ov-cpu",
+    "device": "OpenVINO CPU (CPU)",
+    "fallback": "",
+    "successful": 27,
+    "pictures_s": 0.7873312362056197,
+    "peak_ram_mib": 1640.5234375,
+    "file": "ov-cpu-small-2048.json",
+    "quality": {
+      "keywords": 65,
+      "normalized_keyword_hits": 65,
+      "exact_keyword_hits": 59,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 0.9076923076923077,
+      "recall_at_k": {
+        "1": 0.46666666666666656,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 25
+    },
+    "min_text_agreement": 1.0,
+    "mean_text_agreement": 1.0
+  },
+  {
+    "requested_backend": "ov-gpu",
+    "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det1536-v1",
+    "max_side": 2048,
+    "images": 27,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "devices": {
+      "CPU": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+      "GPU": "Intel(R) UHD Graphics 630 (iGPU)"
+    },
+    "load_s": 15.492255600000135,
+    "total_s": 126.45564019999983,
+    "sqlite_integrity": "ok",
+    "input_s": 4.866249600006995,
+    "detection_s": 85.58447309999974,
+    "recognition_s": 35.308429899994735,
+    "database_s": 0.022794300000896328,
+    "actual_backend": "ov-gpu",
+    "device": "OpenVINO GPU (GPU.0)",
+    "fallback": "",
+    "successful": 27,
+    "pictures_s": 0.21351360807076153,
+    "peak_ram_mib": 2666.0859375,
+    "file": "ov-gpu-small-2048.json",
+    "quality": {
+      "keywords": 65,
+      "normalized_keyword_hits": 65,
+      "exact_keyword_hits": 59,
+      "keyword_recall": 1.0,
+      "exact_keyword_hit_rate": 0.9076923076923077,
+      "recall_at_k": {
+        "1": 0.46666666666666656,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "queries": 25
+    },
+    "min_text_agreement": 1.0,
+    "mean_text_agreement": 1.0
+  }
+]

@@ -1,0 +1,257 @@
+{
+  "images": [
+    {
+      "path": "../.verification/ocr-windows/photos/00_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "Windows Update failed",
+        "错误代码 0x80070005"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/01_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "ChatGPT",
+        "本地图片文字搜索"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/02_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "中文菜单",
+        "红烧牛肉",
+        "番茄鸡蛋"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/03_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "上海人民路",
+        "停车场入口"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/04_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "设备设置",
+        "显示器分辨率 1920 x 1080"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/05_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "会议记录",
+        "张伟 王芳",
+        "2026-10-07"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/06_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "连接失败",
+        "Error 404",
+        "Network unavailable"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/07_controlled_phone_layout.png",
+      "kind": "controlled_phone_layout",
+      "keywords": [
+        "商品清单",
+        "苹果 香蕉 牛奶",
+        "Total 123.45"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/08_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "Windows Update failed",
+        "错误代码 0x80070005"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/09_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "ChatGPT",
+        "本地图片文字搜索"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/10_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "中文菜单",
+        "红烧牛肉",
+        "番茄鸡蛋"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/11_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "上海人民路",
+        "停车场入口"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/12_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "设备设置",
+        "显示器分辨率 1920 x 1080"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/13_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "会议记录",
+        "张伟 王芳",
+        "2026-10-07"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/14_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "连接失败",
+        "Error 404",
+        "Network unavailable"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/15_controlled_highres_screenshot.png",
+      "kind": "controlled_highres_screenshot",
+      "keywords": [
+        "商品清单",
+        "苹果 香蕉 牛奶",
+        "Total 123.45"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/16_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "Windows Update failed",
+        "错误代码 0x80070005"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/17_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "ChatGPT",
+        "本地图片文字搜索"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/18_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "中文菜单",
+        "红烧牛肉",
+        "番茄鸡蛋"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/19_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "上海人民路",
+        "停车场入口"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/20_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "设备设置",
+        "显示器分辨率 1920 x 1080"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/21_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "会议记录",
+        "张伟 王芳",
+        "2026-10-07"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/22_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "连接失败",
+        "Error 404",
+        "Network unavailable"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/23_controlled_sign_photo.png",
+      "kind": "controlled_sign_photo",
+      "keywords": [
+        "商品清单",
+        "苹果 香蕉 牛奶",
+        "Total 123.45"
+      ],
+      "provenance": "controlled rendered text; not a real phone screenshot"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/sample-001.jpg",
+      "kind": "real_camera_photo",
+      "keywords": [],
+      "provenance": "local real photo copy; no manually verified text keyword"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/sample-002.nef",
+      "kind": "real_nef_preview",
+      "keywords": [],
+      "provenance": "local real photo copy; no manually verified text keyword"
+    },
+    {
+      "path": "../.verification/ocr-windows/photos/official_ch_en_num.jpg",
+      "kind": "public_real_chinese_poster",
+      "keywords": [
+        "正品促销",
+        "强力去污",
+        "冰点标准",
+        "破损就赔",
+        "5.8"
+      ],
+      "provenance": "RapidOCR official public test photo, visually checked",
+      "source": "https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/master/resources/test_files/ch_en_num.jpg"
+    }
+  ]
+}

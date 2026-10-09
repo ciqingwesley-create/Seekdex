@@ -1,0 +1,71 @@
+{
+  "platform": "windows",
+  "visible": true,
+  "root": ".\\.verification\\ocr-windows\\gui-20261007-151902\\photos",
+  "model_id": "ppocrv6-small-090f04ab-6f327246-rgb-exif-long2048-det1536-v1",
+  "offline_socket_guard": true,
+  "queries": {
+    "Windows": [
+      "00_controlled_phone_layout.png",
+      "08_controlled_highres_screenshot.png",
+      "16_controlled_sign_photo.png"
+    ],
+    "错误代码": [
+      "00_controlled_phone_layout.png",
+      "08_controlled_highres_screenshot.png",
+      "16_controlled_sign_photo.png"
+    ],
+    "0x80070005": [
+      "00_controlled_phone_layout.png",
+      "08_controlled_highres_screenshot.png",
+      "16_controlled_sign_photo.png"
+    ],
+    "ChatGPT": [
+      "01_controlled_phone_layout.png",
+      "09_controlled_highres_screenshot.png",
+      "17_controlled_sign_photo.png"
+    ],
+    "中文菜单": [
+      "02_controlled_phone_layout.png",
+      "10_controlled_highres_screenshot.png",
+      "18_controlled_sign_photo.png"
+    ],
+    "冰点标准": [
+      "official_ch_en_num.jpg"
+    ]
+  },
+  "phase": 14,
+  "model_installed": true,
+  "model_sha_check": true,
+  "ordinary_search_results": 27,
+  "cancel_saved": 2,
+  "resume_status": "OCR 完成：总数 27，复用 2，完成 25，失败 0；OpenVINO CPU (CPU)；0.94 pictures/s。",
+  "resume_total": 27,
+  "repeat_index_reuses_all": true,
+  "detail_text": "正品促销\n大桶装更划算\n强力去污符合国标\n-40℃深度防冻不结冰\n單章\n10.0起\n10.0起\n5.8起\n大好目餐\n惊喜福利不容错过\n极速发货\n冰点标准\n破损就赔\n假一赔十",
+  "ocr_ai_results": [
+    {
+      "path": ".\\.verification\\ocr-windows\\gui-20261007-151902\\photos\\00_controlled_phone_layout.png",
+      "cosine": 0.34545186161994934
+    }
+  ],
+  "ai_candidates": [
+    1,
+    2,
+    "当前条件"
+  ],
+  "move_preview": {
+    "source": ".\\.verification\\ocr-windows\\gui-20261007-151902\\photos\\00_controlled_phone_layout.png",
+    "target": ".\\.verification\\ocr-windows\\gui-20261007-151902\\moved\\00_controlled_phone_layout.png"
+  },
+  "move_operation_id": 1,
+  "move_uid_ocr_preserved": true,
+  "undo_preserved_ocr": true,
+  "post_undo_search_results": 3,
+  "heartbeat_ticks": 2130,
+  "max_heartbeat_gap_s": 0.23400000000037835,
+  "ocr_status": "OCR：模型已安装；当前目录已识别 27 / 27。",
+  "ai_status": "AI：模型已安装；Chinese-CLIP ViT-B/16；OpenVINO CPU；当前条件已索引 1 / 3，尚未索引 2。",
+  "sqlite_integrity": "ok",
+  "mode": "auto (measured cached OpenVINO CPU)"
+}

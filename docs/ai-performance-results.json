@@ -1,0 +1,3707 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-07",
+  "hardware": {
+    "os": "Windows 11 Pro 10.0.26200",
+    "cpu": "Intel Core i7-8700",
+    "physical_cores": 6,
+    "logical_cores": 12,
+    "ram_gib_approx": 24,
+    "gpu": "Intel UHD Graphics 630",
+    "tested_precision": "FP32"
+  },
+  "notes": [
+    "All runs use local pinned Chinese-CLIP ViT-B/16 weights and unchanged preprocessing.",
+    "Some sample contents repeat via distinct controlled paths; all are fully encoded.",
+    "Large JPEG samples are public photo upscales to 6000x4000.",
+    "Early tuning24 batch32 labels have 24-image timed tail batches; tuning32 uses all32.",
+    "OS cache is not flushed; warmed baseline does one pre-read.",
+    "Stage seconds overlap in pipeline; throughput excludes model startup and metadata scan.",
+    "No user photos were modified and no entire drives were scanned."
+  ],
+  "runs": {
+    "baseline": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 6\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 2.647053,
+          "stages": {
+            "file_read": 0.003338,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.021672,
+            "preprocess": 0.11163,
+            "tensor_batch": 0.00033,
+            "inference": 2.484851,
+            "embedding_normalize": 0.001035,
+            "sqlite": 0.020034
+          },
+          "calls": {
+            "file_read": 16,
+            "pillow_decode": 16,
+            "preprocess": 24,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 117.09601873536302,
+          "inference_pictures_s": 6.439017872701422,
+          "overall_pictures_s": 6.04445682886487,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.162913,
+          "stages": {
+            "file_read": 0.00406,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.496858,
+            "preprocess": 0.154416,
+            "tensor_batch": 0.000346,
+            "inference": 2.478634,
+            "embedding_normalize": 0.000776,
+            "sqlite": 0.023294
+          },
+          "calls": {
+            "file_read": 16,
+            "pillow_decode": 16,
+            "preprocess": 24,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 24.415031113905275,
+          "inference_pictures_s": 6.455168451655227,
+          "overall_pictures_s": 5.058627436926379,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "large_jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.763375,
+          "stages": {
+            "file_read": 0.008039,
+            "preview_extract": 0.065305,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.874947,
+            "preprocess": 0.238937,
+            "tensor_batch": 0.00054,
+            "inference": 2.51334,
+            "embedding_normalize": 0.00073,
+            "sqlite": 0.037975
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 24,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 13.476771100412053,
+          "inference_pictures_s": 6.3660308593345905,
+          "overall_pictures_s": 4.251502746789462,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "nef",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.785976,
+          "stages": {
+            "file_read": 0.006664,
+            "preview_extract": 0.031686,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.680514,
+            "preprocess": 0.245746,
+            "tensor_batch": 0.000544,
+            "inference": 3.76448,
+            "embedding_normalize": 0.001078,
+            "sqlite": 0.041686
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 36,
+            "tensor_batch": 12,
+            "inference": 12,
+            "embedding_normalize": 12,
+            "sqlite": 12,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 24.880521661604174,
+          "inference_pictures_s": 6.375382522951377,
+          "overall_pictures_s": 5.014650719965483,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "mixed",
+          "threads": 6
+        }
+      ]
+    },
+    "thread_probe": [
+      {
+        "threads": 6,
+        "interop": 6,
+        "pictures_s": 6.603928247660049
+      },
+      {
+        "threads": 6,
+        "interop": 6,
+        "pictures_s": 6.334119331561788
+      }
+    ],
+    "torch-tuning": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 24,
+          "wall_seconds": 10.662419,
+          "stages": {
+            "file_read": 0.006553,
+            "preview_extract": 0.023053,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.581631,
+            "preprocess": 0.183103,
+            "tensor_batch": 0.000876,
+            "inference": 9.780971,
+            "embedding_normalize": 0.002009,
+            "sqlite": 0.072077
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.213762368758967,
+          "inference_pictures_s": 2.4537441119087258,
+          "overall_pictures_s": 2.250896370241107,
+          "backend": "cpu",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 9.887508,
+          "stages": {
+            "file_read": 0.006653,
+            "preview_extract": 0.020896,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.57872,
+            "preprocess": 0.181845,
+            "tensor_batch": 0.000253,
+            "inference": 9.064417,
+            "embedding_normalize": 0.000512,
+            "sqlite": 0.022444
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 30,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.452447234790906,
+          "inference_pictures_s": 2.6477157880093114,
+          "overall_pictures_s": 2.427305168482181,
+          "backend": "cpu",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 9.501351,
+          "stages": {
+            "file_read": 0.006582,
+            "preview_extract": 0.022865,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.575822,
+            "preprocess": 0.186484,
+            "tensor_batch": 0.000192,
+            "inference": 8.683303,
+            "embedding_normalize": 0.000656,
+            "sqlite": 0.013014
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 27,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.312483817554213,
+          "inference_pictures_s": 2.763925202195524,
+          "overall_pictures_s": 2.525956465519277,
+          "backend": "cpu",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 9.489841,
+          "stages": {
+            "file_read": 0.006646,
+            "preview_extract": 0.021307,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.575939,
+            "preprocess": 0.187355,
+            "tensor_batch": 9.2e-05,
+            "inference": 8.673555,
+            "embedding_normalize": 0.000451,
+            "sqlite": 0.011386
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 26,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.331868556847613,
+          "inference_pictures_s": 2.7670315113007296,
+          "overall_pictures_s": 2.5290201106099133,
+          "backend": "cpu",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 9.373009,
+          "stages": {
+            "file_read": 0.006663,
+            "preview_extract": 0.02143,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.579253,
+            "preprocess": 0.189794,
+            "tensor_batch": 3.9e-05,
+            "inference": 8.560981,
+            "embedding_normalize": 0.000246,
+            "sqlite": 0.002428
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 25,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.107634794389945,
+          "inference_pictures_s": 2.8034170383043717,
+          "overall_pictures_s": 2.560543900493278,
+          "backend": "cpu",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 6.147381,
+          "stages": {
+            "file_read": 0.006312,
+            "preview_extract": 0.021645,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.578664,
+            "preprocess": 0.19601,
+            "tensor_batch": 0.001038,
+            "inference": 5.307792,
+            "embedding_normalize": 0.001829,
+            "sqlite": 0.022329
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.901660912673446,
+          "inference_pictures_s": 4.5216542019732495,
+          "overall_pictures_s": 3.9041017273567546,
+          "backend": "cpu",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 6.480616,
+          "stages": {
+            "file_read": 0.006208,
+            "preview_extract": 0.021629,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.600136,
+            "preprocess": 0.187552,
+            "tensor_batch": 0.000226,
+            "inference": 5.628481,
+            "embedding_normalize": 0.000689,
+            "sqlite": 0.024315
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 30,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.42889549676589,
+          "inference_pictures_s": 4.264027896691843,
+          "overall_pictures_s": 3.7033515995494914,
+          "backend": "cpu",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 5.740384,
+          "stages": {
+            "file_read": 0.006324,
+            "preview_extract": 0.022813,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.58253,
+            "preprocess": 0.189927,
+            "tensor_batch": 0.000104,
+            "inference": 4.916672,
+            "embedding_normalize": 0.000552,
+            "sqlite": 0.008551
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 27,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.940343864849286,
+          "inference_pictures_s": 4.881350637178969,
+          "overall_pictures_s": 4.180905116483662,
+          "backend": "cpu",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 5.694073,
+          "stages": {
+            "file_read": 0.006564,
+            "preview_extract": 0.022011,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.582945,
+            "preprocess": 0.186475,
+            "tensor_batch": 8.5e-05,
+            "inference": 4.877038,
+            "embedding_normalize": 0.000444,
+            "sqlite": 0.006007
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 26,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.075376412132908,
+          "inference_pictures_s": 4.921019684488823,
+          "overall_pictures_s": 4.214909377867596,
+          "backend": "cpu",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 5.688286,
+          "stages": {
+            "file_read": 0.006252,
+            "preview_extract": 0.021008,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.575914,
+            "preprocess": 0.190079,
+            "tensor_batch": 6.2e-05,
+            "inference": 4.879552,
+            "embedding_normalize": 0.000211,
+            "sqlite": 0.002589
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 25,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.255164493547458,
+          "inference_pictures_s": 4.918484319871988,
+          "overall_pictures_s": 4.219197061835614,
+          "backend": "cpu",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.841975,
+          "stages": {
+            "file_read": 0.006544,
+            "preview_extract": 0.024842,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.63024,
+            "preprocess": 0.19261,
+            "tensor_batch": 0.000976,
+            "inference": 3.948979,
+            "embedding_normalize": 0.002171,
+            "sqlite": 0.023613
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 28.095280461137204,
+          "inference_pictures_s": 6.077520290687795,
+          "overall_pictures_s": 4.956655493401434,
+          "backend": "cpu",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.517114,
+          "stages": {
+            "file_read": 0.006737,
+            "preview_extract": 0.022596,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.609371,
+            "preprocess": 0.187783,
+            "tensor_batch": 0.000239,
+            "inference": 3.652225,
+            "embedding_normalize": 0.000846,
+            "sqlite": 0.025921
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 30,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.038569269692083,
+          "inference_pictures_s": 6.571336650945656,
+          "overall_pictures_s": 5.313126686059964,
+          "backend": "cpu",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.207673,
+          "stages": {
+            "file_read": 0.006339,
+            "preview_extract": 0.02129,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.602725,
+            "preprocess": 0.189769,
+            "tensor_batch": 0.000121,
+            "inference": 3.358544,
+            "embedding_normalize": 0.000546,
+            "sqlite": 0.015413
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 27,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.26390309746221,
+          "inference_pictures_s": 7.145953722803691,
+          "overall_pictures_s": 5.703865566732984,
+          "backend": "cpu",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.238788,
+          "stages": {
+            "file_read": 0.006389,
+            "preview_extract": 0.023157,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.595199,
+            "preprocess": 0.194669,
+            "tensor_batch": 0.000161,
+            "inference": 3.403096,
+            "embedding_normalize": 0.000468,
+            "sqlite": 0.003004
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 26,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.289223762347234,
+          "inference_pictures_s": 7.052401695397367,
+          "overall_pictures_s": 5.661996368961394,
+          "backend": "cpu",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.176962,
+          "stages": {
+            "file_read": 0.005817,
+            "preview_extract": 0.022615,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.600089,
+            "preprocess": 0.197786,
+            "tensor_batch": 3.8e-05,
+            "inference": 3.33064,
+            "embedding_normalize": 0.000136,
+            "sqlite": 0.005914
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 25,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 29.04489493614359,
+          "inference_pictures_s": 7.205822304421973,
+          "overall_pictures_s": 5.745802398072858,
+          "backend": "cpu",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.621124,
+          "stages": {
+            "file_read": 0.007214,
+            "preview_extract": 0.023004,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.724752,
+            "preprocess": 0.226177,
+            "tensor_batch": 0.000932,
+            "inference": 3.601394,
+            "embedding_normalize": 0.00205,
+            "sqlite": 0.023047
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 24.46116636956542,
+          "inference_pictures_s": 6.664086184405261,
+          "overall_pictures_s": 5.193541657830679,
+          "backend": "cpu",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.773393,
+          "stages": {
+            "file_read": 0.006617,
+            "preview_extract": 0.024118,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.664049,
+            "preprocess": 0.21451,
+            "tensor_batch": 0.000294,
+            "inference": 3.834139,
+            "embedding_normalize": 0.000534,
+            "sqlite": 0.018086
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 30,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 26.394103557265307,
+          "inference_pictures_s": 6.259553970265554,
+          "overall_pictures_s": 5.027870323180001,
+          "backend": "cpu",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.381161,
+          "stages": {
+            "file_read": 0.006973,
+            "preview_extract": 0.022255,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.625461,
+            "preprocess": 0.20912,
+            "tensor_batch": 0.000105,
+            "inference": 3.49123,
+            "embedding_normalize": 0.000462,
+            "sqlite": 0.010992
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 27,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 27.78391982486869,
+          "inference_pictures_s": 6.87436805939454,
+          "overall_pictures_s": 5.477999759515871,
+          "backend": "cpu",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.344753,
+          "stages": {
+            "file_read": 0.006957,
+            "preview_extract": 0.022803,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.638261,
+            "preprocess": 0.221633,
+            "tensor_batch": 0.000125,
+            "inference": 3.430004,
+            "embedding_normalize": 0.000333,
+            "sqlite": 0.010589
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 26,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 26.976779736841515,
+          "inference_pictures_s": 6.99707638824911,
+          "overall_pictures_s": 5.523904859392924,
+          "backend": "cpu",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 4.262719,
+          "stages": {
+            "file_read": 0.006568,
+            "preview_extract": 0.020905,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.611683,
+            "preprocess": 0.194864,
+            "tensor_batch": 9.3e-05,
+            "inference": 3.410022,
+            "embedding_normalize": 0.000254,
+            "sqlite": 0.006116
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 25,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 28.776288338409152,
+          "inference_pictures_s": 7.038077760202134,
+          "overall_pictures_s": 5.630208602748209,
+          "backend": "cpu",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 6
+        }
+      ]
+    },
+    "ov-cpu-tuning": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 6\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 24,
+          "wall_seconds": 10.614059,
+          "stages": {
+            "file_read": 0.00654,
+            "preview_extract": 0.022898,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.581946,
+            "preprocess": 0.184517,
+            "tensor_batch": 0.001074,
+            "inference": 9.722507,
+            "embedding_normalize": 0.001911,
+            "sqlite": 0.07977
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.15450414059035,
+          "inference_pictures_s": 2.468499122705697,
+          "overall_pictures_s": 2.261151951964455,
+          "backend": "OpenVINO CPU",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 10.255651,
+          "stages": {
+            "file_read": 0.006178,
+            "preview_extract": 0.021624,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.580173,
+            "preprocess": 0.18075,
+            "tensor_batch": 0.003089,
+            "inference": 9.433835,
+            "embedding_normalize": 0.000443,
+            "sqlite": 0.020179
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.428856699102983,
+          "inference_pictures_s": 2.5440343190229635,
+          "overall_pictures_s": 2.340173305629467,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 10.648989,
+          "stages": {
+            "file_read": 0.006505,
+            "preview_extract": 0.022079,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.597092,
+            "preprocess": 0.184835,
+            "tensor_batch": 0.003368,
+            "inference": 9.811673,
+            "embedding_normalize": 0.000248,
+            "sqlite": 0.012147
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.61094914196106,
+          "inference_pictures_s": 2.4460660276794792,
+          "overall_pictures_s": 2.2537351575341287,
+          "backend": "OpenVINO CPU",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 10.554589,
+          "stages": {
+            "file_read": 0.006034,
+            "preview_extract": 0.02103,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.576266,
+            "preprocess": 0.181355,
+            "tensor_batch": 0.00305,
+            "inference": 9.743595,
+            "embedding_normalize": 0.000179,
+            "sqlite": 0.010959
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.585521578722673,
+          "inference_pictures_s": 2.463156565928695,
+          "overall_pictures_s": 2.273892448809538,
+          "backend": "OpenVINO CPU",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 10.80992,
+          "stages": {
+            "file_read": 0.006084,
+            "preview_extract": 0.021552,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.575348,
+            "preprocess": 0.179857,
+            "tensor_batch": 0.003017,
+            "inference": 10.006215,
+            "embedding_normalize": 0.000111,
+            "sqlite": 0.005803
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.65756647901681,
+          "inference_pictures_s": 2.3985093264536093,
+          "overall_pictures_s": 2.22018296361274,
+          "backend": "OpenVINO CPU",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 1
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 6.040197,
+          "stages": {
+            "file_read": 0.006066,
+            "preview_extract": 0.025709,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.62319,
+            "preprocess": 0.193523,
+            "tensor_batch": 0.00089,
+            "inference": 5.151907,
+            "embedding_normalize": 0.001881,
+            "sqlite": 0.024201
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 28.28560922488002,
+          "inference_pictures_s": 4.658469184323398,
+          "overall_pictures_s": 3.9733804042047653,
+          "backend": "OpenVINO CPU",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 5.920074,
+          "stages": {
+            "file_read": 0.00623,
+            "preview_extract": 0.021541,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.59145,
+            "preprocess": 0.183721,
+            "tensor_batch": 0.00329,
+            "inference": 5.088377,
+            "embedding_normalize": 0.000446,
+            "sqlite": 0.015181
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.890079233618366,
+          "inference_pictures_s": 4.716631648952111,
+          "overall_pictures_s": 4.054003310532599,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 5.843762,
+          "stages": {
+            "file_read": 0.006224,
+            "preview_extract": 0.021081,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.581941,
+            "preprocess": 0.181617,
+            "tensor_batch": 0.003093,
+            "inference": 5.023162,
+            "embedding_normalize": 0.000269,
+            "sqlite": 0.015734
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.346596060253162,
+          "inference_pictures_s": 4.777867008868119,
+          "overall_pictures_s": 4.106943648985578,
+          "backend": "OpenVINO CPU",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 5.906309,
+          "stages": {
+            "file_read": 0.006245,
+            "preview_extract": 0.021081,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.580361,
+            "preprocess": 0.182073,
+            "tensor_batch": 0.002968,
+            "inference": 5.094107,
+            "embedding_normalize": 0.00015,
+            "sqlite": 0.006812
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.388978930307943,
+          "inference_pictures_s": 4.711326244226908,
+          "overall_pictures_s": 4.063451334380081,
+          "backend": "OpenVINO CPU",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 6.022578,
+          "stages": {
+            "file_read": 0.006304,
+            "preview_extract": 0.021148,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.584725,
+            "preprocess": 0.18532,
+            "tensor_batch": 0.003975,
+            "inference": 5.205649,
+            "embedding_normalize": 9.1e-05,
+            "sqlite": 0.001937
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.094157094007876,
+          "inference_pictures_s": 4.610376150985209,
+          "overall_pictures_s": 3.9850044283361266,
+          "backend": "OpenVINO CPU",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 2
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.426927,
+          "stages": {
+            "file_read": 0.006698,
+            "preview_extract": 0.021236,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.591431,
+            "preprocess": 0.187895,
+            "tensor_batch": 0.001,
+            "inference": 2.578128,
+            "embedding_normalize": 0.001802,
+            "sqlite": 0.025329
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.730198449074646,
+          "inference_pictures_s": 9.30908007670682,
+          "overall_pictures_s": 7.003358781692315,
+          "backend": "OpenVINO CPU",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.380355,
+          "stages": {
+            "file_read": 0.006234,
+            "preview_extract": 0.022012,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.588948,
+            "preprocess": 0.181488,
+            "tensor_batch": 0.002968,
+            "inference": 2.548937,
+            "embedding_normalize": 0.000662,
+            "sqlite": 0.019541
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.049506562060994,
+          "inference_pictures_s": 9.415689756161099,
+          "overall_pictures_s": 7.099845181960018,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.517344,
+          "stages": {
+            "file_read": 0.006678,
+            "preview_extract": 0.021275,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.582822,
+            "preprocess": 0.182646,
+            "tensor_batch": 0.003124,
+            "inference": 2.697646,
+            "embedding_normalize": 0.000251,
+            "sqlite": 0.012159
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.2487582254566,
+          "inference_pictures_s": 8.896645445695988,
+          "overall_pictures_s": 6.823329749094434,
+          "backend": "OpenVINO CPU",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.613867,
+          "stages": {
+            "file_read": 0.006594,
+            "preview_extract": 0.021275,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.584182,
+            "preprocess": 0.185576,
+            "tensor_batch": 0.004073,
+            "inference": 2.787724,
+            "embedding_normalize": 0.000296,
+            "sqlite": 0.010764
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.08925224447016,
+          "inference_pictures_s": 8.609173648467353,
+          "overall_pictures_s": 6.64108630905245,
+          "backend": "OpenVINO CPU",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.760693,
+          "stages": {
+            "file_read": 0.006182,
+            "preview_extract": 0.022521,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.585036,
+            "preprocess": 0.18497,
+            "tensor_batch": 0.003168,
+            "inference": 2.938845,
+            "embedding_normalize": 0.000169,
+            "sqlite": 0.0062
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.04849075195096,
+          "inference_pictures_s": 8.166473563593861,
+          "overall_pictures_s": 6.381803011982835,
+          "backend": "OpenVINO CPU",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 2.942263,
+          "stages": {
+            "file_read": 0.0068,
+            "preview_extract": 0.02349,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.634943,
+            "preprocess": 0.196539,
+            "tensor_batch": 0.001006,
+            "inference": 2.041627,
+            "embedding_normalize": 0.00187,
+            "sqlite": 0.022925
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 27.84959362801298,
+          "inference_pictures_s": 11.755330430093254,
+          "overall_pictures_s": 8.15698692322821,
+          "backend": "OpenVINO CPU",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 2.874762,
+          "stages": {
+            "file_read": 0.007094,
+            "preview_extract": 0.022236,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.598767,
+            "preprocess": 0.189351,
+            "tensor_batch": 0.00309,
+            "inference": 2.020789,
+            "embedding_normalize": 0.000494,
+            "sqlite": 0.022706
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 29.359665691273328,
+          "inference_pictures_s": 11.876549209244507,
+          "overall_pictures_s": 8.348516618174315,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.05697,
+          "stages": {
+            "file_read": 0.00631,
+            "preview_extract": 0.022188,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.584437,
+            "preprocess": 0.185329,
+            "tensor_batch": 0.00416,
+            "inference": 2.230907,
+            "embedding_normalize": 0.000282,
+            "sqlite": 0.012701
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 3,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.06524157421605,
+          "inference_pictures_s": 10.75795629311307,
+          "overall_pictures_s": 7.850911453201317,
+          "backend": "OpenVINO CPU",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.044823,
+          "stages": {
+            "file_read": 0.006684,
+            "preview_extract": 0.022415,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.581763,
+            "preprocess": 0.181403,
+            "tensor_batch": 0.003049,
+            "inference": 2.227954,
+            "embedding_normalize": 0.000247,
+            "sqlite": 0.007046
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2,
+            "preview_extract": 8
+          },
+          "decode_pictures_s": 30.292894422951917,
+          "inference_pictures_s": 10.772215225269463,
+          "overall_pictures_s": 7.8822328723595305,
+          "backend": "OpenVINO CPU",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 24,
+          "wall_seconds": 3.160178,
+          "stages": {
+            "file_read": 0.006166,
+            "preview_extract": 0.021515,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.586891,
+            "preprocess": 0.182863,
+            "tensor_batch": 0.003282,
+            "inference": 2.339814,
+            "embedding_normalize": 0.000119,
+            "sqlite": 0.006007
+          },
+          "calls": {
+            "file_read": 24,
+            "pillow_decode": 24,
+            "preprocess": 48,
+            "preview_extract": 8,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.096496893163707,
+          "inference_pictures_s": 10.257225574340524,
+          "overall_pictures_s": 7.594509878179552,
+          "backend": "OpenVINO CPU",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 6
+        }
+      ]
+    },
+    "ov-gpu-tuning": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 32,
+          "wall_seconds": 7.790545,
+          "stages": {
+            "file_read": 0.020002,
+            "preview_extract": 0.031232,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.787122,
+            "preprocess": 0.264111,
+            "tensor_batch": 0.001492,
+            "inference": 6.623288,
+            "embedding_normalize": 0.003282,
+            "sqlite": 0.035889
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "tensor_batch": 32,
+            "inference": 32,
+            "embedding_normalize": 32,
+            "sqlite": 32,
+            "preview_extract": 10
+          },
+          "decode_pictures_s": 29.025812110475872,
+          "inference_pictures_s": 4.831437195543966,
+          "overall_pictures_s": 4.107543393050883,
+          "backend": "OpenVINO GPU",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 9.460136,
+          "stages": {
+            "file_read": 0.023764,
+            "preview_extract": 0.040309,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.861324,
+            "preprocess": 0.294551,
+            "tensor_batch": 0.00623,
+            "inference": 8.194676,
+            "embedding_normalize": 0.001066,
+            "sqlite": 0.017226
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 26.230626223412802,
+          "inference_pictures_s": 3.9049744004521965,
+          "overall_pictures_s": 3.382615325486244,
+          "backend": "OpenVINO GPU",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 6.929515,
+          "stages": {
+            "file_read": 0.017795,
+            "preview_extract": 0.03022,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.751298,
+            "preprocess": 0.253647,
+            "tensor_batch": 0.005137,
+            "inference": 5.846273,
+            "embedding_normalize": 0.000343,
+            "sqlite": 0.009891
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 30.390518158334597,
+          "inference_pictures_s": 5.473572650473216,
+          "overall_pictures_s": 4.617927672631737,
+          "backend": "OpenVINO GPU",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 6.418434,
+          "stages": {
+            "file_read": 0.017814,
+            "preview_extract": 0.034079,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.749305,
+            "preprocess": 0.27193,
+            "tensor_batch": 0.004993,
+            "inference": 5.311416,
+            "embedding_normalize": 0.000223,
+            "sqlite": 0.008113
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 29.81936917124518,
+          "inference_pictures_s": 6.024758746066961,
+          "overall_pictures_s": 4.985639644011724,
+          "backend": "OpenVINO GPU",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 5.517496,
+          "stages": {
+            "file_read": 0.02402,
+            "preview_extract": 0.032368,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.763788,
+            "preprocess": 0.263227,
+            "tensor_batch": 0.004056,
+            "inference": 4.401501,
+            "embedding_normalize": 0.000183,
+            "sqlite": 0.006942
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 29.53656211031352,
+          "inference_pictures_s": 7.27024712705961,
+          "overall_pictures_s": 5.799732552583236,
+          "backend": "OpenVINO GPU",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 6
+        }
+      ]
+    },
+    "torch32": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 32,
+          "wall_seconds": 5.976164,
+          "stages": {
+            "file_read": 0.017793,
+            "preview_extract": 0.030049,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.75642,
+            "preprocess": 0.255006,
+            "tensor_batch": 0.001311,
+            "inference": 4.859629,
+            "embedding_normalize": 0.002637,
+            "sqlite": 0.033986
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "tensor_batch": 32,
+            "inference": 32,
+            "embedding_normalize": 32,
+            "sqlite": 32,
+            "preview_extract": 10
+          },
+          "decode_pictures_s": 30.209540928263667,
+          "inference_pictures_s": 6.584864811696531,
+          "overall_pictures_s": 5.354605037304515,
+          "backend": "cpu",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 5.81439,
+          "stages": {
+            "file_read": 0.018253,
+            "preview_extract": 0.027963,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.779326,
+            "preprocess": 0.258024,
+            "tensor_batch": 0.000324,
+            "inference": 4.680267,
+            "embedding_normalize": 0.00082,
+            "sqlite": 0.03143
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 72,
+            "preview_extract": 10,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 29.532118947992092,
+          "inference_pictures_s": 6.837216765624697,
+          "overall_pictures_s": 5.503586412085562,
+          "backend": "cpu",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 5.776073,
+          "stages": {
+            "file_read": 0.018054,
+            "preview_extract": 0.027291,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.783555,
+            "preprocess": 0.256439,
+            "tensor_batch": 0.000248,
+            "inference": 4.654671,
+            "embedding_normalize": 0.000812,
+            "sqlite": 0.015886
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 68,
+            "preview_extract": 10,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 29.48387554487584,
+          "inference_pictures_s": 6.874814567989875,
+          "overall_pictures_s": 5.540096666029714,
+          "backend": "cpu",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 5.624195,
+          "stages": {
+            "file_read": 0.017328,
+            "preview_extract": 0.028071,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.741288,
+            "preprocess": 0.253286,
+            "tensor_batch": 0.00015,
+            "inference": 4.553987,
+            "embedding_normalize": 0.000486,
+            "sqlite": 0.01217
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 66,
+            "preview_extract": 10,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 30.77002960653786,
+          "inference_pictures_s": 7.02680969445016,
+          "overall_pictures_s": 5.689703452122806,
+          "backend": "cpu",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 6.530071,
+          "stages": {
+            "file_read": 0.018068,
+            "preview_extract": 0.029378,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.754992,
+            "preprocess": 0.254671,
+            "tensor_batch": 0.000154,
+            "inference": 5.447375,
+            "embedding_normalize": 0.000337,
+            "sqlite": 0.006081
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 65,
+            "preview_extract": 10,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.271239768084463,
+          "inference_pictures_s": 5.874389040592946,
+          "overall_pictures_s": 4.900406061428652,
+          "backend": "cpu",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 4
+        }
+      ]
+    },
+    "cpu32": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 32,
+          "wall_seconds": 3.803328,
+          "stages": {
+            "file_read": 0.01712,
+            "preview_extract": 0.029097,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.740306,
+            "preprocess": 0.247881,
+            "tensor_batch": 0.001377,
+            "inference": 2.714903,
+            "embedding_normalize": 0.002448,
+            "sqlite": 0.029861
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "tensor_batch": 32,
+            "inference": 32,
+            "embedding_normalize": 32,
+            "sqlite": 32,
+            "preview_extract": 10
+          },
+          "decode_pictures_s": 30.93568857042316,
+          "inference_pictures_s": 11.78679311931218,
+          "overall_pictures_s": 8.413683794464522,
+          "backend": "OpenVINO CPU",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 3.699261,
+          "stages": {
+            "file_read": 0.017187,
+            "preview_extract": 0.027528,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.744525,
+            "preprocess": 0.243281,
+            "tensor_batch": 0.004139,
+            "inference": 2.624724,
+            "embedding_normalize": 0.000692,
+            "sqlite": 0.020819
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 30.992105729568696,
+          "inference_pictures_s": 12.191758066752923,
+          "overall_pictures_s": 8.650377555188598,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 3.957487,
+          "stages": {
+            "file_read": 0.016915,
+            "preview_extract": 0.027716,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.735919,
+            "preprocess": 0.24926,
+            "tensor_batch": 0.00407,
+            "inference": 2.888796,
+            "embedding_normalize": 0.000327,
+            "sqlite": 0.017309
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 31.073693205542774,
+          "inference_pictures_s": 11.077279254056014,
+          "overall_pictures_s": 8.085938567991416,
+          "backend": "OpenVINO CPU",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 4.050613,
+          "stages": {
+            "file_read": 0.017929,
+            "preview_extract": 0.030276,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.738721,
+            "preprocess": 0.245413,
+            "tensor_batch": 0.00411,
+            "inference": 2.985265,
+            "embedding_normalize": 0.000257,
+            "sqlite": 0.007864
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 30.997569596808802,
+          "inference_pictures_s": 10.719316375598146,
+          "overall_pictures_s": 7.9000388336295035,
+          "backend": "OpenVINO CPU",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 4.503699,
+          "stages": {
+            "file_read": 0.02487,
+            "preview_extract": 0.035018,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.793602,
+            "preprocess": 0.320345,
+            "tensor_batch": 0.008642,
+            "inference": 3.286457,
+            "embedding_normalize": 0.000216,
+            "sqlite": 0.005665
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 27.261071615687044,
+          "inference_pictures_s": 9.736929465378674,
+          "overall_pictures_s": 7.105270736460618,
+          "backend": "OpenVINO CPU",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 6
+        }
+      ]
+    },
+    "auto32": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 32,
+          "wall_seconds": 7.46733,
+          "stages": {
+            "file_read": 0.017751,
+            "preview_extract": 0.029302,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.747812,
+            "preprocess": 0.254765,
+            "tensor_batch": 0.001401,
+            "inference": 6.35764,
+            "embedding_normalize": 0.002371,
+            "sqlite": 0.033799
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "tensor_batch": 32,
+            "inference": 32,
+            "embedding_normalize": 32,
+            "sqlite": 32,
+            "preview_extract": 10
+          },
+          "decode_pictures_s": 30.486933490849154,
+          "inference_pictures_s": 5.033314248683474,
+          "overall_pictures_s": 4.285333407576759,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 1,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 11.34614,
+          "stages": {
+            "file_read": 0.018328,
+            "preview_extract": 0.028428,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.742975,
+            "preprocess": 0.244801,
+            "tensor_batch": 0.003922,
+            "inference": 10.260479,
+            "embedding_normalize": 0.000676,
+            "sqlite": 0.0291
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 30.93186097675084,
+          "inference_pictures_s": 3.11876277900866,
+          "overall_pictures_s": 2.820342300538276,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 4,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 8.185785,
+          "stages": {
+            "file_read": 0.017498,
+            "preview_extract": 0.028955,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.740721,
+            "preprocess": 0.248016,
+            "tensor_batch": 0.004696,
+            "inference": 7.111119,
+            "embedding_normalize": 0.000375,
+            "sqlite": 0.0166
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 30.912199692810013,
+          "inference_pictures_s": 4.499995007818038,
+          "overall_pictures_s": 3.9092157452315566,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 8,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 7.298928,
+          "stages": {
+            "file_read": 0.018346,
+            "preview_extract": 0.031361,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.768867,
+            "preprocess": 0.273814,
+            "tensor_batch": 0.004316,
+            "inference": 6.168796,
+            "embedding_normalize": 0.00026,
+            "sqlite": 0.00868
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 29.29362094786834,
+          "inference_pictures_s": 5.1873979946816196,
+          "overall_pictures_s": 4.384205281205086,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 16,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 32,
+          "wall_seconds": 5.97005,
+          "stages": {
+            "file_read": 0.017772,
+            "preview_extract": 0.027836,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.751115,
+            "preprocess": 0.257679,
+            "tensor_batch": 0.004115,
+            "inference": 4.887178,
+            "embedding_normalize": 0.000134,
+            "sqlite": 0.002891
+          },
+          "calls": {
+            "file_read": 1297,
+            "pillow_decode": 32,
+            "preprocess": 96,
+            "preview_extract": 10,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 30.348956090750963,
+          "inference_pictures_s": 6.54774595891535,
+          "overall_pictures_s": 5.360089380830955,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 32,
+          "group": "mixed",
+          "threads": 6
+        }
+      ]
+    },
+    "fair-baseline": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 2.641728,
+          "stages": {
+            "file_read": 0.003416,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.01949,
+            "preprocess": 0.11124,
+            "tensor_batch": 0.000362,
+            "inference": 2.46907,
+            "embedding_normalize": 0.000869,
+            "sqlite": 0.03179
+          },
+          "calls": {
+            "file_read": 634,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 119.27303087680585,
+          "inference_pictures_s": 6.480172696602365,
+          "overall_pictures_s": 6.056640796230409,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.172083,
+          "stages": {
+            "file_read": 0.019754,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.532621,
+            "preprocess": 0.143498,
+            "tensor_batch": 0.000378,
+            "inference": 2.438491,
+            "embedding_normalize": 0.000869,
+            "sqlite": 0.029909
+          },
+          "calls": {
+            "file_read": 1243,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 22.99270125439556,
+          "inference_pictures_s": 6.561434920202699,
+          "overall_pictures_s": 5.044004525985625,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "large_jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.549687,
+          "stages": {
+            "file_read": 0.005747,
+            "preview_extract": 0.050619,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.819906,
+            "preprocess": 0.201323,
+            "tensor_batch": 0.000383,
+            "inference": 2.422903,
+            "embedding_normalize": 0.000811,
+            "sqlite": 0.026931
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 14.847878841308654,
+          "inference_pictures_s": 6.603648598396222,
+          "overall_pictures_s": 4.507439923995525,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "nef",
+          "threads": 6
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 9.744675,
+          "stages": {
+            "file_read": 0.028897,
+            "preview_extract": 0.053353,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.438286,
+            "preprocess": 0.483758,
+            "tensor_batch": 0.001126,
+            "inference": 7.637866,
+            "embedding_normalize": 0.002738,
+            "sqlite": 0.069606
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 120,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 23.94858239360094,
+          "inference_pictures_s": 6.284477889504739,
+          "overall_pictures_s": 4.925767301395728,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 4.096483,
+          "stages": {
+            "file_read": 0.49698,
+            "preview_extract": 0.375725,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.683556,
+            "preprocess": 0.174338,
+            "tensor_batch": 0.000305,
+            "inference": 2.320071,
+            "embedding_normalize": 0.001074,
+            "sqlite": 0.027624
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 9.245353776351426,
+          "inference_pictures_s": 6.896340672332872,
+          "overall_pictures_s": 3.905789620305832,
+          "backend": "cpu",
+          "batch_size": 2,
+          "group": "nef_real",
+          "threads": 6
+        }
+      ]
+    },
+    "fair-baseline-warm": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 2.758468,
+          "stages": {
+            "file_read": 0.003913,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.021003,
+            "preprocess": 0.118202,
+            "tensor_batch": 0.000408,
+            "inference": 2.57633,
+            "embedding_normalize": 0.000901,
+            "sqlite": 0.031446
+          },
+          "calls": {
+            "file_read": 634,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 111.79586075825543,
+          "inference_pictures_s": 6.2103845392476895,
+          "overall_pictures_s": 5.800321888863904,
+          "backend": "cpu",
+          "batch_size": 2,
+          "effective_batch_size": 2,
+          "group": "jpeg",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.335098,
+          "stages": {
+            "file_read": 0.023238,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.550124,
+            "preprocess": 0.160915,
+            "tensor_batch": 0.000341,
+            "inference": 2.569317,
+            "embedding_normalize": 0.000736,
+            "sqlite": 0.02338
+          },
+          "calls": {
+            "file_read": 1243,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 21.790141867442397,
+          "inference_pictures_s": 6.227335902887811,
+          "overall_pictures_s": 4.797459793014158,
+          "backend": "cpu",
+          "batch_size": 2,
+          "effective_batch_size": 2,
+          "group": "large_jpeg",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.703018,
+          "stages": {
+            "file_read": 0.006572,
+            "preview_extract": 0.053827,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.828307,
+            "preprocess": 0.209199,
+            "tensor_batch": 0.000332,
+            "inference": 2.559875,
+            "embedding_normalize": 0.000949,
+            "sqlite": 0.023824
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 14.573209886101258,
+          "inference_pictures_s": 6.2503051906831395,
+          "overall_pictures_s": 4.320799836220073,
+          "backend": "cpu",
+          "batch_size": 2,
+          "effective_batch_size": 2,
+          "group": "nef",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 9.89667,
+          "stages": {
+            "file_read": 0.032836,
+            "preview_extract": 0.051561,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.425254,
+            "preprocess": 0.483952,
+            "tensor_batch": 0.001105,
+            "inference": 7.796023,
+            "embedding_normalize": 0.003025,
+            "sqlite": 0.07148
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 120,
+            "tensor_batch": 24,
+            "inference": 24,
+            "embedding_normalize": 24,
+            "sqlite": 24,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 24.077010317500527,
+          "inference_pictures_s": 6.1569854270568465,
+          "overall_pictures_s": 4.850116447253803,
+          "backend": "cpu",
+          "batch_size": 2,
+          "effective_batch_size": 2,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.78166,
+          "stages": {
+            "file_read": 0.00576,
+            "preview_extract": 0.048824,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.844428,
+            "preprocess": 0.217977,
+            "tensor_batch": 0.000435,
+            "inference": 2.608253,
+            "embedding_normalize": 0.001084,
+            "sqlite": 0.036711
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 40,
+            "tensor_batch": 8,
+            "inference": 8,
+            "embedding_normalize": 8,
+            "sqlite": 8
+          },
+          "decode_pictures_s": 14.324223425655937,
+          "inference_pictures_s": 6.134374234401341,
+          "overall_pictures_s": 4.230946421990787,
+          "backend": "cpu",
+          "batch_size": 2,
+          "effective_batch_size": 2,
+          "group": "nef_real",
+          "threads": 6,
+          "input_cache": "warmed"
+        }
+      ]
+    },
+    "fair-torch": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 2.588631,
+          "stages": {
+            "file_read": 0.004068,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.02256,
+            "preprocess": 0.12918,
+            "tensor_batch": 0.00267,
+            "inference": 2.516304,
+            "embedding_normalize": 0.000329,
+            "sqlite": 0.002179
+          },
+          "calls": {
+            "file_read": 634,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 102.69049086054632,
+          "inference_pictures_s": 6.358532196427777,
+          "overall_pictures_s": 6.180872255507195,
+          "backend": "cpu",
+          "batch_size": 8,
+          "pipeline": true,
+          "group": "jpeg",
+          "threads": 4
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 2.782554,
+          "stages": {
+            "file_read": 0.028786,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.490255,
+            "preprocess": 0.164399,
+            "tensor_batch": 0.002608,
+            "inference": 2.481182,
+            "embedding_normalize": 0.000186,
+            "sqlite": 0.006714
+          },
+          "calls": {
+            "file_read": 1243,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 23.41097974950252,
+          "inference_pictures_s": 6.448539446118826,
+          "overall_pictures_s": 5.750112199064794,
+          "backend": "cpu",
+          "batch_size": 8,
+          "pipeline": true,
+          "group": "large_jpeg",
+          "threads": 4
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.115012,
+          "stages": {
+            "file_read": 0.006669,
+            "preview_extract": 0.061722,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.741996,
+            "preprocess": 0.192637,
+            "tensor_batch": 0.002583,
+            "inference": 2.643551,
+            "embedding_normalize": 0.000176,
+            "sqlite": 0.009821
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 15.951761872098775,
+          "inference_pictures_s": 6.052465036611739,
+          "overall_pictures_s": 5.136416315274653,
+          "backend": "cpu",
+          "batch_size": 8,
+          "pipeline": true,
+          "group": "nef",
+          "threads": 4
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 9.020526,
+          "stages": {
+            "file_read": 0.049243,
+            "preview_extract": 0.093174,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.545579,
+            "preprocess": 0.626919,
+            "tensor_batch": 0.009296,
+            "inference": 8.932177,
+            "embedding_normalize": 0.000856,
+            "sqlite": 0.015531
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 20.73510258476013,
+          "inference_pictures_s": 5.373829918506989,
+          "overall_pictures_s": 5.321197691629009,
+          "backend": "cpu",
+          "batch_size": 8,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 4
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 2.970805,
+          "stages": {
+            "file_read": 0.006691,
+            "preview_extract": 0.052992,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.682619,
+            "preprocess": 0.184172,
+            "tensor_batch": 0.002691,
+            "inference": 2.528075,
+            "embedding_normalize": 0.000197,
+            "sqlite": 0.010246
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 17.26977767319968,
+          "inference_pictures_s": 6.328926159231827,
+          "overall_pictures_s": 5.385746520848613,
+          "backend": "cpu",
+          "batch_size": 8,
+          "pipeline": true,
+          "group": "nef_real",
+          "threads": 4
+        }
+      ]
+    },
+    "fair-cpu": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 6\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 1.401475,
+          "stages": {
+            "file_read": 0.004665,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.021936,
+            "preprocess": 0.137021,
+            "tensor_batch": 0.003762,
+            "inference": 1.362172,
+            "embedding_normalize": 0.000793,
+            "sqlite": 0.013099
+          },
+          "calls": {
+            "file_read": 634,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 97.78636124726502,
+          "inference_pictures_s": 11.745946914192922,
+          "overall_pictures_s": 11.416540840925649,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "pipeline": true,
+          "group": "jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 1.713021,
+          "stages": {
+            "file_read": 0.028359,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.618917,
+            "preprocess": 0.206001,
+            "tensor_batch": 0.003082,
+            "inference": 1.555319,
+            "embedding_normalize": 0.000686,
+            "sqlite": 0.019541
+          },
+          "calls": {
+            "file_read": 1243,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 18.75123787468782,
+          "inference_pictures_s": 10.287278686880313,
+          "overall_pictures_s": 9.340226264645313,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "pipeline": true,
+          "group": "large_jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 1.920046,
+          "stages": {
+            "file_read": 0.006923,
+            "preview_extract": 0.060664,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.924866,
+            "preprocess": 0.239068,
+            "tensor_batch": 0.0034,
+            "inference": 1.675717,
+            "embedding_normalize": 0.000798,
+            "sqlite": 0.015048
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 12.992064284734083,
+          "inference_pictures_s": 9.548151627034876,
+          "overall_pictures_s": 8.33313498735721,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "pipeline": true,
+          "group": "nef",
+          "threads": 6
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 5.132052,
+          "stages": {
+            "file_read": 0.050351,
+            "preview_extract": 0.06419,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.79637,
+            "preprocess": 0.671315,
+            "tensor_batch": 0.012045,
+            "inference": 5.080756,
+            "embedding_normalize": 0.002741,
+            "sqlite": 0.053649
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 12,
+            "inference": 12,
+            "embedding_normalize": 12,
+            "sqlite": 12,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 18.58861308034231,
+          "inference_pictures_s": 9.447412944057932,
+          "overall_pictures_s": 9.352984317110337,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 1.949337,
+          "stages": {
+            "file_read": 0.007193,
+            "preview_extract": 0.049866,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.890689,
+            "preprocess": 0.256511,
+            "tensor_batch": 0.00385,
+            "inference": 1.727679,
+            "embedding_normalize": 0.000673,
+            "sqlite": 0.012382
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 4,
+            "inference": 4,
+            "embedding_normalize": 4,
+            "sqlite": 4
+          },
+          "decode_pictures_s": 13.286178471574637,
+          "inference_pictures_s": 9.260979614847434,
+          "overall_pictures_s": 8.207919739680142,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "pipeline": true,
+          "group": "nef_real",
+          "threads": 6
+        }
+      ]
+    },
+    "fair-gpu": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 2.924927,
+          "stages": {
+            "file_read": 0.002859,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.018397,
+            "preprocess": 0.102266,
+            "tensor_batch": 0.002422,
+            "inference": 2.733155,
+            "embedding_normalize": 0.000175,
+            "sqlite": 0.001606
+          },
+          "calls": {
+            "file_read": 634,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 129.53158141869466,
+          "inference_pictures_s": 5.854040477031123,
+          "overall_pictures_s": 5.47022273994726,
+          "backend": "OpenVINO GPU",
+          "batch_size": 32,
+          "pipeline": true,
+          "group": "jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.074886,
+          "stages": {
+            "file_read": 0.016213,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.436791,
+            "preprocess": 0.124392,
+            "tensor_batch": 0.002397,
+            "inference": 2.427161,
+            "embedding_normalize": 9.3e-05,
+            "sqlite": 0.001788
+          },
+          "calls": {
+            "file_read": 1243,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 27.7106180160583,
+          "inference_pictures_s": 6.592063732072162,
+          "overall_pictures_s": 5.20344426382755,
+          "backend": "OpenVINO GPU",
+          "batch_size": 32,
+          "pipeline": true,
+          "group": "large_jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.605342,
+          "stages": {
+            "file_read": 0.004773,
+            "preview_extract": 0.047834,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.70192,
+            "preprocess": 0.156269,
+            "tensor_batch": 0.002213,
+            "inference": 2.599801,
+            "embedding_normalize": 0.000114,
+            "sqlite": 0.001797
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 17.567051238696703,
+          "inference_pictures_s": 6.154317195816142,
+          "overall_pictures_s": 4.43785940073682,
+          "backend": "OpenVINO GPU",
+          "batch_size": 32,
+          "pipeline": true,
+          "group": "nef",
+          "threads": 6
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 7.519412,
+          "stages": {
+            "file_read": 0.02795,
+            "preview_extract": 0.074373,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.291276,
+            "preprocess": 0.467964,
+            "tensor_batch": 0.009187,
+            "inference": 6.687886,
+            "embedding_normalize": 0.000322,
+            "sqlite": 0.011648
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "preview_extract": 16,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 25.78478407660659,
+          "inference_pictures_s": 7.177155830706445,
+          "overall_pictures_s": 6.383478196618266,
+          "backend": "OpenVINO GPU",
+          "batch_size": 32,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.279824,
+          "stages": {
+            "file_read": 0.005542,
+            "preview_extract": 0.039985,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.637167,
+            "preprocess": 0.152362,
+            "tensor_batch": 0.002228,
+            "inference": 2.357748,
+            "embedding_normalize": 0.000144,
+            "sqlite": 0.002164
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 19.160391638405088,
+          "inference_pictures_s": 6.786136601536721,
+          "overall_pictures_s": 4.878310989703912,
+          "backend": "OpenVINO GPU",
+          "batch_size": 32,
+          "pipeline": true,
+          "group": "nef_real",
+          "threads": 6
+        }
+      ]
+    },
+    "fair-auto": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 6\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 16,
+          "wall_seconds": 3.055427,
+          "stages": {
+            "file_read": 0.002949,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.019105,
+            "preprocess": 0.106071,
+            "tensor_batch": 0.002072,
+            "inference": 2.836311,
+            "embedding_normalize": 0.000203,
+            "sqlite": 0.006268
+          },
+          "calls": {
+            "file_read": 634,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 124.87804878048782,
+          "inference_pictures_s": 5.6411303273865245,
+          "overall_pictures_s": 5.236584467891571,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 32,
+          "effective_batch_size": 16,
+          "pipeline": true,
+          "group": "jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.189468,
+          "stages": {
+            "file_read": 0.016854,
+            "preview_extract": 0.0,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.441251,
+            "preprocess": 0.122674,
+            "tensor_batch": 0.00252,
+            "inference": 2.543813,
+            "embedding_normalize": 0.000113,
+            "sqlite": 0.001402
+          },
+          "calls": {
+            "file_read": 1243,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 27.549205463696172,
+          "inference_pictures_s": 6.289770513791697,
+          "overall_pictures_s": 5.016511062331776,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 32,
+          "effective_batch_size": 16,
+          "pipeline": true,
+          "group": "large_jpeg",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.834741,
+          "stages": {
+            "file_read": 0.004346,
+            "preview_extract": 0.046987,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.70118,
+            "preprocess": 0.151492,
+            "tensor_batch": 0.002827,
+            "inference": 2.842292,
+            "embedding_normalize": 0.000111,
+            "sqlite": 0.001627
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 17.699017151453805,
+          "inference_pictures_s": 5.629259766413866,
+          "overall_pictures_s": 4.172381199073859,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 32,
+          "effective_batch_size": 16,
+          "pipeline": true,
+          "group": "nef",
+          "threads": 6
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 8.274508,
+          "stages": {
+            "file_read": 0.024769,
+            "preview_extract": 0.085984,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.239593,
+            "preprocess": 0.452308,
+            "tensor_batch": 0.009045,
+            "inference": 7.480341,
+            "embedding_normalize": 0.000304,
+            "sqlite": 0.007222
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "preview_extract": 16,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 26.62740603576726,
+          "inference_pictures_s": 6.416819767975818,
+          "overall_pictures_s": 5.80094948249168,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 32,
+          "effective_batch_size": 32,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6
+        },
+        {
+          "pictures": 16,
+          "wall_seconds": 3.367901,
+          "stages": {
+            "file_read": 0.005266,
+            "preview_extract": 0.038113,
+            "raw_unpack": 0.0,
+            "pillow_decode": 0.627315,
+            "preprocess": 0.152536,
+            "tensor_batch": 0.002194,
+            "inference": 2.459787,
+            "embedding_normalize": 9e-05,
+            "sqlite": 0.005112
+          },
+          "calls": {
+            "file_read": 16,
+            "preview_extract": 16,
+            "pillow_decode": 16,
+            "preprocess": 48,
+            "tensor_batch": 1,
+            "inference": 1,
+            "embedding_normalize": 1,
+            "sqlite": 1
+          },
+          "decode_pictures_s": 19.435637671124717,
+          "inference_pictures_s": 6.504628246266852,
+          "overall_pictures_s": 4.750733609768952,
+          "backend": "OpenVINO AUTO",
+          "batch_size": 32,
+          "effective_batch_size": 16,
+          "pipeline": true,
+          "group": "nef_real",
+          "threads": 6
+        }
+      ]
+    },
+    "pipeline-torch-tuning": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 48,
+          "wall_seconds": 7.429558,
+          "stages": {
+            "file_read": 0.050771,
+            "preview_extract": 0.059842,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.306507,
+            "preprocess": 0.494175,
+            "tensor_batch": 0.010543,
+            "inference": 7.401281,
+            "embedding_normalize": 0.009983,
+            "sqlite": 0.067303
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 48,
+            "inference": 48,
+            "embedding_normalize": 48,
+            "sqlite": 48,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 25.113862590547246,
+          "inference_pictures_s": 6.485363817425659,
+          "overall_pictures_s": 6.460680259560687,
+          "backend": "cpu",
+          "batch_size": 1,
+          "effective_batch_size": 1,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 4,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 7.576036,
+          "stages": {
+            "file_read": 0.042469,
+            "preview_extract": 0.067737,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.323716,
+            "preprocess": 0.517193,
+            "tensor_batch": 0.011008,
+            "inference": 7.523231,
+            "embedding_normalize": 0.001707,
+            "sqlite": 0.057608
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 12,
+            "inference": 12,
+            "embedding_normalize": 12,
+            "sqlite": 12,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 24.60131770807974,
+          "inference_pictures_s": 6.380237427243694,
+          "overall_pictures_s": 6.335767398773016,
+          "backend": "cpu",
+          "batch_size": 4,
+          "effective_batch_size": 4,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 4,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 8.954028,
+          "stages": {
+            "file_read": 0.058159,
+            "preview_extract": 0.079375,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.513478,
+            "preprocess": 0.599741,
+            "tensor_batch": 0.00905,
+            "inference": 8.865075,
+            "embedding_normalize": 0.000718,
+            "sqlite": 0.024448
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 21.32619616634966,
+          "inference_pictures_s": 5.414505799443321,
+          "overall_pictures_s": 5.360715630519747,
+          "backend": "cpu",
+          "batch_size": 8,
+          "effective_batch_size": 8,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 4,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 8.713567,
+          "stages": {
+            "file_read": 0.063468,
+            "preview_extract": 0.112915,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.862467,
+            "preprocess": 0.845258,
+            "tensor_batch": 0.008754,
+            "inference": 8.502119,
+            "embedding_normalize": 0.000525,
+            "sqlite": 0.012869
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 3,
+            "preview_extract": 16,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3
+          },
+          "decode_pictures_s": 16.64292737997329,
+          "inference_pictures_s": 5.645651395846141,
+          "overall_pictures_s": 5.5086509231262735,
+          "backend": "cpu",
+          "batch_size": 16,
+          "effective_batch_size": 16,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 4,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 8.375849,
+          "stages": {
+            "file_read": 0.025296,
+            "preview_extract": 0.095457,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.257581,
+            "preprocess": 0.458164,
+            "tensor_batch": 0.008351,
+            "inference": 7.597747,
+            "embedding_normalize": 0.000312,
+            "sqlite": 0.00648
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "preview_extract": 16,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 26.136701482931098,
+          "inference_pictures_s": 6.317662328055936,
+          "overall_pictures_s": 5.7307621329812175,
+          "backend": "cpu",
+          "batch_size": 32,
+          "effective_batch_size": 32,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 4,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 7.685083,
+          "stages": {
+            "file_read": 0.060142,
+            "preview_extract": 0.065318,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.57335,
+            "preprocess": 0.612657,
+            "tensor_batch": 0.009934,
+            "inference": 7.661721,
+            "embedding_normalize": 0.011498,
+            "sqlite": 0.06739
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 48,
+            "inference": 48,
+            "embedding_normalize": 48,
+            "sqlite": 48,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 20.76603299982219,
+          "inference_pictures_s": 6.264910977572794,
+          "overall_pictures_s": 6.245866342519595,
+          "backend": "cpu",
+          "batch_size": 1,
+          "effective_batch_size": 1,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 8.000766,
+          "stages": {
+            "file_read": 0.050698,
+            "preview_extract": 0.08058,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.532891,
+            "preprocess": 0.669843,
+            "tensor_batch": 0.012054,
+            "inference": 7.945032,
+            "embedding_normalize": 0.002882,
+            "sqlite": 0.051791
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 12,
+            "inference": 12,
+            "embedding_normalize": 12,
+            "sqlite": 12,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 20.56544696428296,
+          "inference_pictures_s": 6.0415112236174755,
+          "overall_pictures_s": 5.999425405031971,
+          "backend": "cpu",
+          "batch_size": 4,
+          "effective_batch_size": 4,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 7.798414,
+          "stages": {
+            "file_read": 0.055092,
+            "preview_extract": 0.087295,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.530243,
+            "preprocess": 0.672068,
+            "tensor_batch": 0.011336,
+            "inference": 7.703003,
+            "embedding_normalize": 0.001075,
+            "sqlite": 0.033063
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 6,
+            "inference": 6,
+            "embedding_normalize": 6,
+            "sqlite": 6,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 20.47171959885665,
+          "inference_pictures_s": 6.231336012721273,
+          "overall_pictures_s": 6.155097453593606,
+          "backend": "cpu",
+          "batch_size": 8,
+          "effective_batch_size": 8,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 9.097732,
+          "stages": {
+            "file_read": 0.084391,
+            "preview_extract": 0.131443,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.82314,
+            "preprocess": 0.822084,
+            "tensor_batch": 0.008236,
+            "inference": 8.893854,
+            "embedding_normalize": 0.000667,
+            "sqlite": 0.010324
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 3,
+            "preview_extract": 16,
+            "inference": 3,
+            "embedding_normalize": 3,
+            "sqlite": 3
+          },
+          "decode_pictures_s": 16.77701046256315,
+          "inference_pictures_s": 5.396985378891986,
+          "overall_pictures_s": 5.276040110303601,
+          "backend": "cpu",
+          "batch_size": 16,
+          "effective_batch_size": 16,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 8.68321,
+          "stages": {
+            "file_read": 0.028225,
+            "preview_extract": 0.119169,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.418221,
+            "preprocess": 0.647488,
+            "tensor_batch": 0.010385,
+            "inference": 7.771541,
+            "embedding_normalize": 0.000427,
+            "sqlite": 0.011146
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "preview_extract": 16,
+            "tensor_batch": 2,
+            "inference": 2,
+            "embedding_normalize": 2,
+            "sqlite": 2
+          },
+          "decode_pictures_s": 21.689004081599457,
+          "inference_pictures_s": 6.176381235072941,
+          "overall_pictures_s": 5.527909418478746,
+          "backend": "cpu",
+          "batch_size": 32,
+          "effective_batch_size": 32,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        }
+      ]
+    },
+    "pipeline-cpu-tuning": {
+      "torch": "2.8.0+cpu",
+      "cpu": "ATen/Parallel:\n\tat::get_num_threads() : 6\n\tat::get_num_interop_threads() : 6\nOpenMP 2019\n\tomp_get_max_threads() : 6\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 6\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+      "results": [
+        {
+          "pictures": 48,
+          "wall_seconds": 5.019462,
+          "stages": {
+            "file_read": 0.043676,
+            "preview_extract": 0.066303,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.824938,
+            "preprocess": 0.698219,
+            "tensor_batch": 0.009248,
+            "inference": 4.996046,
+            "embedding_normalize": 0.010928,
+            "sqlite": 0.058302
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 48,
+            "inference": 48,
+            "embedding_normalize": 48,
+            "sqlite": 48,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 18.229214138578488,
+          "inference_pictures_s": 9.60759768825187,
+          "overall_pictures_s": 9.562778796091907,
+          "backend": "OpenVINO CPU",
+          "batch_size": 1,
+          "effective_batch_size": 1,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        },
+        {
+          "pictures": 48,
+          "wall_seconds": 4.910593,
+          "stages": {
+            "file_read": 0.038754,
+            "preview_extract": 0.065879,
+            "raw_unpack": 0.0,
+            "pillow_decode": 1.578379,
+            "preprocess": 0.601138,
+            "tensor_batch": 0.012941,
+            "inference": 4.858503,
+            "embedding_normalize": 0.002207,
+            "sqlite": 0.058866
+          },
+          "calls": {
+            "file_read": 1893,
+            "pillow_decode": 48,
+            "preprocess": 144,
+            "tensor_batch": 12,
+            "inference": 12,
+            "embedding_normalize": 12,
+            "sqlite": 12,
+            "preview_extract": 16
+          },
+          "decode_pictures_s": 21.014381717487908,
+          "inference_pictures_s": 9.879586366417804,
+          "overall_pictures_s": 9.774786874009683,
+          "backend": "OpenVINO CPU",
+          "batch_size": 4,
+          "effective_batch_size": 4,
+          "pipeline": true,
+          "group": "mixed",
+          "threads": 6,
+          "input_cache": "warmed"
+        }
+      ]
+    },
+    "compatibility": {
+      "model_id": "OFA-Sys/chinese-clip-vit-base-patch16@f4a64596bbcf9a2a94591b74b9dc39b2e4e77e3e:rgb224-exif-v1",
+      "devices": {
+        "available": true,
+        "version": "2026.4.1-22982-e213a147257-releases/2026/4",
+        "devices": {
+          "CPU": {
+            "FULL_DEVICE_NAME": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+            "OPTIMIZATION_CAPABILITIES": "['FP32', 'INT8', 'BIN', 'EXPORT_IMPORT']"
+          },
+          "GPU": {
+            "FULL_DEVICE_NAME": "Intel(R) UHD Graphics 630 (iGPU)",
+            "OPTIMIZATION_CAPABILITIES": "['FP32', 'BIN', 'FP16', 'GPU_USM_MEMORY', 'EXPORT_IMPORT']"
+          }
+        },
+        "reason": ""
+      },
+      "backends": {
+        "torch": {
+          "actual_device": "cpu",
+          "minimum_cosine": 0.9999998807907104,
+          "maximum_score_delta": 8.940696716308594e-08,
+          "same_full_rankings": true,
+          "existing_vectors_unchanged": true,
+          "sample_count": 6,
+          "dimension": 512
+        },
+        "ov-cpu": {
+          "actual_device": "OpenVINO CPU",
+          "minimum_cosine": 0.9999998807907104,
+          "maximum_score_delta": 1.7881393432617188e-07,
+          "same_full_rankings": true,
+          "existing_vectors_unchanged": true,
+          "sample_count": 6,
+          "dimension": 512
+        },
+        "ov-gpu": {
+          "actual_device": "OpenVINO GPU",
+          "minimum_cosine": 0.9999998807907104,
+          "maximum_score_delta": 2.086162567138672e-07,
+          "same_full_rankings": true,
+          "existing_vectors_unchanged": true,
+          "sample_count": 6,
+          "dimension": 512
+        },
+        "ov-auto": {
+          "actual_device": "OpenVINO AUTO",
+          "minimum_cosine": 0.9999998807907104,
+          "maximum_score_delta": 2.086162567138672e-07,
+          "same_full_rankings": true,
+          "existing_vectors_unchanged": true,
+          "sample_count": 6,
+          "dimension": 512
+        }
+      },
+      "integrity": "ok"
+    },
+    "cpu-kernels": {
+      "intra_op": 4,
+      "inter_op": 1,
+      "mkl_available": true,
+      "mkldnn_available": true,
+      "mkldnn_enabled": true,
+      "observed_matrix_and_convolution_operators": {
+        "aten::conv2d": 1,
+        "aten::mkldnn_convolution": 1,
+        "aten::addmm": 72,
+        "aten::matmul": 25
+      },
+      "parallel_configuration": "ATen/Parallel:\n\tat::get_num_threads() : 4\n\tat::get_num_interop_threads() : 1\nOpenMP 2019\n\tomp_get_max_threads() : 4\nIntel(R) oneAPI Math Kernel Library Version 2025.2-Product Build 20250620 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 4\nIntel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\nstd::thread::hardware_concurrency() : 12\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n"
+    }
+  },
+  "gui": [
+    {
+      "platform": "Windows",
+      "sample_count": 48,
+      "ordinary_search": 48,
+      "backend_items": {
+        "自动": true,
+        "PyTorch CPU": true,
+        "CUDA": false,
+        "OpenVINO CPU": true,
+        "OpenVINO GPU": true
+      },
+      "cancel_retained": 8,
+      "resume_seconds": 4.984,
+      "index_status": "AI 索引完成：总数 48，已有 8，本次完成 40，失败 0，尚未完成 0；OpenVINO CPU。 batch 4，8.1 pictures/s。",
+      "actual_auto_device": "OpenVINO CPU",
+      "automatic_batch": 4,
+      "text_results": [
+        "D:/Photos/sample-001.jpg",
+        "D:/Photos/sample-002.jpg",
+        "D:/Photos/sample-003.jpg",
+        "D:/Photos/sample-004.jpg",
+        "D:/Photos/sample-005.jpg"
+      ],
+      "backend_switch_preserved_vectors": true,
+      "integrity": "ok",
+      "timer_ticks": 673,
+      "maximum_ui_tick_gap_seconds": 0.188,
+      "startup_success": true
+    },
+    {
+      "platform": "Windows",
+      "sample_count": 48,
+      "ordinary_search": 48,
+      "backend_items": {
+        "自动": true,
+        "PyTorch CPU": true,
+        "CUDA": false,
+        "OpenVINO CPU": true,
+        "OpenVINO GPU": true
+      },
+      "cancel_retained": 8,
+      "resume_seconds": 4.14,
+      "index_status": "AI 索引完成：总数 48，已有 8，本次完成 40，失败 0，尚未完成 0；OpenVINO CPU。 batch 4，9.7 pictures/s。",
+      "actual_auto_device": "OpenVINO CPU",
+      "automatic_batch": 4,
+      "text_results": [
+        "D:/Photos/sample-006.jpg",
+        "D:/Photos/sample-004.jpg",
+        "D:/Photos/sample-001.jpg",
+        "D:/Photos/sample-005.jpg",
+        "D:/Photos/sample-003.jpg"
+      ],
+      "backend_switch_preserved_vectors": true,
+      "integrity": "ok",
+      "visible_thumbnail_loaded": true,
+      "timer_ticks": 630,
+      "maximum_ui_tick_gap_seconds": 0.156,
+      "startup_success": true
+    }
+  ]
+}
