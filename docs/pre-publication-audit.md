@@ -54,11 +54,11 @@
 
 ## Open-source files / licenses
 
-MIT LICENSE 完整保留。README、CONTRIBUTING、SECURITY、CHANGELOG、issue / PR templates、Windows CI 已准备。CI 用合成图片 / fake backend，不下载模型，不声明 Linux 官方支持。
+主项目许可证于 2026-10-09 改为 GPL-3.0-only，完整 GNU 原文随包提供；此前 MIT 授权不追溯撤销，历史正文另存。README、CONTRIBUTING、SECURITY、CHANGELOG、issue / PR templates、Windows CI 已准备。CI 用合成图片 / fake backend，不下载模型，不声明 Linux 官方支持。
 
 THIRD_PARTY_LICENSES 分别记录 PySide6 / Qt、Pillow、NumPy、ExifRead、rawpy / LibRaw、PyTorch、OpenVINO、Transformers / Hub / Safetensors、Chinese-CLIP code / weights、RapidOCR / OCR weights、ONNX Runtime、PyInstaller、Inno Setup，包内收集实际 wheel 完整通知。
 
-Chinese-CLIP 代码 MIT 已核实，但固定快照独立权重再分发许可仍不明确；标准包不含模型，预装包只在本地准备，未上传。公开预装权重前需要核实。不要把产品 MIT 自动应用到模型。
+Chinese-CLIP 代码 MIT 已核实，但固定快照独立权重再分发许可仍不明确；标准包不含模型，预装包只在本地准备，未上传。公开预装权重前需要核实。不要把产品 GPLv3 或上游代码 MIT 自动应用到模型。
 
 ## Tests / RC verification
 

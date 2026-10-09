@@ -26,6 +26,7 @@ OutputBaseFilename=Seekdex-{#ProductVersion}-Windows-x64-Setup-{#Edition}
 SetupIconFile=..\src\seekdex\resources\app.ico
 UninstallDisplayIcon={app}\Seekdex.exe
 LicenseFile=..\LICENSE
+InfoAfterFile=..\build\generated\license-notice.txt
 Compression=lzma2/fast
 SolidCompression=yes
 WizardStyle=modern

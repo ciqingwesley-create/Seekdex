@@ -2,6 +2,13 @@
 
 版本由 `src/seekdex/app_info.py` 统一提供，构建时自动生成版本化发布说明。
 
+## 2026-10-09 — Source license change
+
+- 项目自有源代码从 MIT 改为 GNU GPL v3.0，SPDX：**GPL-3.0-only**（仅第 3 版）。
+- 旧 MIT 版本的既有授权不受追溯影响；历史正文保留于 `docs/licenses/LEGACY-MIT.txt`。此记录不是给当前新版本增加 MIT 双许可。
+- README、包元数据、About、安装器和新 RC 包统一许可证声明，保留作者版权与第三方通知；不重新授权模型权重。
+- 对应应用源码快照包含所有受版本控制的构建脚本 / 工作流 / 文档，并记录生成包的 Git commit；Windows 标准包不带模型权重。
+
 ## 0.5.0-rc1 — Seekdex · 索星仪
 
 - 首个正式采用 Seekdex 品牌的 Unsigned Release Candidate；按发布计划使用 RC 版本，不是此前开发构建 0.5.1 的稳定升级承诺。

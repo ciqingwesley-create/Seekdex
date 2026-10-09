@@ -1,10 +1,14 @@
-﻿param([switch]$SkipTests,[switch]$SkipInstaller,[switch]$ReusePortable,[string]$InnoCompiler,[switch]$SkipRuntimeVerification)
+﻿param([switch]$SkipTests,[switch]$SkipInstaller,[switch]$ReusePortable,[string]$InnoCompiler,[switch]$SkipRuntimeVerification,
+      [string]$PythonExe,[ValidateSet('Standard','Preinstalled','All')][string]$Edition='Standard')
 $ErrorActionPreference = 'Stop'
 $workspaceRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 Set-Location -LiteralPath $workspaceRoot
-$pythonExe = Join-Path $workspaceRoot '.venv\Scripts\python.exe'
+if (-not $PythonExe) { $PythonExe = Join-Path $workspaceRoot '.venv\Scripts\python.exe' }
+$pythonExe = [IO.Path]::GetFullPath($PythonExe)
+$gitDirectory = Split-Path (Get-Command git -ErrorAction Stop).Source
+$env:PYTHONPATH = Join-Path $workspaceRoot 'src'
 # Build with a controlled DLL search path: developer tools may ship an incompatible ICU.
-$env:PATH = "$env:SystemRoot\System32;$env:SystemRoot;$env:SystemRoot\System32\Wbem;" + (Split-Path $pythonExe)
+$env:PATH = "$env:SystemRoot\System32;$env:SystemRoot;$env:SystemRoot\System32\Wbem;$gitDirectory;" + (Split-Path $pythonExe)
 if (-not (Test-Path -LiteralPath $pythonExe)) { throw '请先创建构建虚拟环境，参见 README 的 Build from source。' }
 if (-not $SkipTests) {
     $testDirectory = Join-Path $workspaceRoot ('.verification\pytest-build-' + [Guid]::NewGuid().ToString('N'))
@@ -24,6 +28,8 @@ if (-not $ReusePortable) {
 }
 $portableExe = Join-Path $workspaceRoot 'dist\Seekdex\Seekdex.exe'
 if (-not (Test-Path -LiteralPath $portableExe)) { throw 'Portable EXE 不存在。' }
+& $pythonExe scripts/release_licenses.py --stage
+if ($LASTEXITCODE -ne 0) { throw 'GPL 正文、通知或源码归档校验失败。' }
 New-Item -ItemType Directory -Force -Path (Join-Path $workspaceRoot 'release') | Out-Null
 # Portable smoke-test calls the EXE itself, never python -m.
 $checkRoot = Join-Path $workspaceRoot ('.verification\frozen-build-' + [Guid]::NewGuid().ToString('N'))
@@ -39,21 +45,22 @@ if (-not $SkipRuntimeVerification) { try {
 else { Write-Warning 'Runtime verification was explicitly skipped. These artifacts are not verified for release.' }
 $productVersion = & $pythonExe -c 'from seekdex.app_info import VERSION; print(VERSION)'
 # A build-only override reuses verified caches without migrating the real profile.
-if ($env:SEEKDEX_BUILD_MODEL_ROOT) {
+if ($Edition -ne 'Standard') { if ($env:SEEKDEX_BUILD_MODEL_ROOT) {
     & $pythonExe scripts/prepare_preinstalled.py --ai-root $env:SEEKDEX_BUILD_MODEL_ROOT --ocr-root (Join-Path $env:SEEKDEX_BUILD_MODEL_ROOT 'ocr')
 } else { & $pythonExe scripts/prepare_preinstalled.py }
-if ($LASTEXITCODE -ne 0) { throw '预装模型准备或校验失败。' }
-& $pythonExe scripts/package_release.py --version $productVersion
+if ($LASTEXITCODE -ne 0) { throw '预装模型准备或校验失败。' } }
+& $pythonExe scripts/package_release.py --version $productVersion --edition $Edition.ToLowerInvariant()
 if ($LASTEXITCODE -ne 0) { throw 'Portable ZIP 生成失败。' }
 if (-not $SkipInstaller) {
     if (-not $InnoCompiler) { $InnoCompiler = Join-Path $workspaceRoot '.tools\InnoSetup\ISCC.exe' }
     if (-not (Test-Path -LiteralPath $InnoCompiler)) { $InnoCompiler = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe' }
     if (-not (Test-Path -LiteralPath $InnoCompiler)) { throw '未找到 Inno Setup ISCC.exe，可传入 -InnoCompiler 完整路径。' }
-    foreach ($edition in @('Standard','Preinstalled')) {
-        & $InnoCompiler ("/DEdition=" + $edition) packaging/installer.iss
-        if ($LASTEXITCODE -ne 0) { throw ('安装包构建失败：' + $edition) }
+    $buildEditions = if ($Edition -eq 'All') { @('Standard','Preinstalled') } else { @($Edition) }
+    foreach ($buildEdition in $buildEditions) {
+        & $InnoCompiler ("/DEdition=" + $buildEdition) packaging/installer.iss
+        if ($LASTEXITCODE -ne 0) { throw ('安装包构建失败：' + $buildEdition) }
     }
 }
-& $pythonExe scripts/package_release.py --version $productVersion --hash-only
+& $pythonExe scripts/package_release.py --version $productVersion --hash-only --edition $Edition.ToLowerInvariant()
 if ($LASTEXITCODE -ne 0) { throw '生成 SHA256 失败。' }
 Get-ChildItem -LiteralPath (Join-Path $workspaceRoot 'release')

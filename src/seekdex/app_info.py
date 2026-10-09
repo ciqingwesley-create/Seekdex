@@ -7,8 +7,7 @@ PACKAGE_VERSION = "0.5.0rc1"
 WINDOWS_VERSION = (0, 5, 0, 1)
 RELEASE_STATUS = "Unsigned Release Candidate"
 AUTHOR = "ciqing wesley"
-# Compatibility URL: the private repository has not yet been renamed by its owner.
-HOMEPAGE = "https://github.com/ciqingwesley-create/local-image-search"
-LICENSE = "MIT"
+HOMEPAGE = "https://github.com/ciqingwesley-create/Seekdex"
+LICENSE = "GPL-3.0-only"
 DESCRIPTION = "Seekdex · 索星仪是一款开源、本地优先的智能文件与图片搜索工具。"
 COPYRIGHT = "Copyright (c) 2026 ciqing wesley"

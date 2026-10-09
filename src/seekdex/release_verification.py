@@ -8,7 +8,7 @@ import sys
 from time import monotonic
 from PySide6.QtCore import QTimer, QThread, Signal, QDate, Qt
 from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox, QWizard
-from .app_info import VERSION
+from .app_info import VERSION, LICENSE
 from .paths import get_config_path, get_database_path
 from .product_worker import ProductTask
 
@@ -130,6 +130,12 @@ class ReleaseVerification:
         yield lambda:self.window._wizard is not None and self.window._wizard.isVisible() and self.idle()
         assert self.window.isVisible()
         assert resource_path("app.ico").is_file()
+        assert LICENSE == "GPL-3.0-only"
+        license_text = resource_path("LICENSE").read_text(encoding="utf8")
+        assert "GNU GENERAL PUBLIC LICENSE" in license_text and "END OF TERMS AND CONDITIONS" in license_text
+        assert len(license_text) > 30000
+        self.report["license_expression"] = LICENSE
+        self.record("complete_gplv3_license_and_metadata")
         wizard = self.window._wizard
         paths = iter([self.photos,self.photos/"sub",self.other])
         QFileDialog.getExistingDirectory = lambda *args,**kwargs:str(next(paths))

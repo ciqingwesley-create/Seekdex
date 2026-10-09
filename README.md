@@ -81,7 +81,7 @@ Windows binaries currently unsigned. SmartScreen / Smart App Control may warn or
 
 本地预装版后缀 `-Preinstalled`，只附带识图 / 默认 OCR 模型；首次启动后台校验导入，不含用户照片、数据库、embedding、OCR 结果或其他机器的编译 / 调优缓存。新机器现场生成 OpenVINO IR，已有有效模型复用。
 
-模型与代码许可分别记录。Chinese-CLIP 固定快照独立权重授权仍需核实，不能仅凭代码 MIT 推断。**核实之前不要公开分发预装版**。见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。
+模型与代码许可分别记录。Chinese-CLIP 固定快照独立权重授权仍需核实，不能仅凭其上游代码 MIT 或 Seekdex 的 GPLv3 推断。**核实之前不要公开分发预装版**。见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。
 
 ## Data Storage
 
@@ -126,7 +126,7 @@ py -3.12 -m venv .venv
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build_windows.ps1
 ```
 
-脚本限定清理 build / dist，生成版本 / 许可，PyInstaller onedir，实际 EXE 隔离验证，ZIP / Setup 和 SHA256。版本唯一来源 `src/seekdex/app_info.py`。`-SkipRuntimeVerification` 仅供明确未验证测试包。构建不自动上传或发布 GitHub。
+脚本默认仅构建不含模型的标准 Portable / Setup；`-Edition All` 仅在本地明确需要预装版且许可已核实后使用。脚本限定清理 build / dist，生成版本 / 许可，PyInstaller onedir，实际 EXE 隔离验证，ZIP / Setup 和 SHA256。版本唯一来源 `src/seekdex/app_info.py`。`-SkipRuntimeVerification` 仅供明确未验证测试包。构建不自动上传或发布 GitHub。
 
 ## Contributing
 
@@ -134,11 +134,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build_windows.ps1
 
 ## License
 
-源代码使用 [MIT License](LICENSE)。
+项目自有源代码使用 **[GNU GPL v3.0（GPL-3.0-only）](LICENSE)**，仅第 3 版，不是 “or later”。
+
+在 GPLv3 适用范围内，对外分发基于 Seekdex 的修改 / 衍生软件时，须遵守 GPLv3 并提供对应源代码。运行软件和本地处理文件本身不要求公开个人数据。
+
+此变更不追溯撤销已按 MIT 授予的旧版本许可；旧版本仍可按当时的 MIT 条款使用。历史文本保存在 [LEGACY-MIT.txt](docs/licenses/LEGACY-MIT.txt)，不表示当前版本双许可证。
+
+作者版权声明与适用范围见 [COPYRIGHT.md](COPYRIGHT.md)。第三方库和模型继续遵循各自上游许可，不能将项目 GPLv3 当作模型权重授权。Windows 标准包附 GPL 正文、版权 / 第三方通知、构建脚本与源码快照。
 
 ## Third-party Licenses
 
-代码、Qt / LibRaw 动态库、模型和打包工具分别遵循上游许可。见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。发行包附依赖许可与可修改应用源码，不把所有组件称为 MIT。
+代码、Qt / LibRaw 动态库、模型和打包工具分别遵循上游许可。见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。发行包附依赖许可与可修改应用源码，不把所有组件重新授权为 GPL。
 
 ## Known Issues
 

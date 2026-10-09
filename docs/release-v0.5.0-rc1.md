@@ -4,6 +4,10 @@ First Release Candidate under the Seekdex brand. **Unsigned pre-release**, not f
 
 Local search, beyond filenames.
 
+## Source license
+
+New RC builds use **GNU GPL v3.0 / GPL-3.0-only**, with full license text, copyright / third-party notices and an application source snapshot. Earlier MIT versions retain the permissions already granted under their original terms; the license change is not retroactive. Third-party components and model weights retain their own licenses. The RC tag and build provenance must identify the GPL commit. The GitHub draft is not published by the build scripts.
+
 - Product, package, EXE and build names now use Seekdex / `seekdex`.
 - Original installer AppId is retained for upgrade compatibility.
 - Previous profiles are copied safely with SQLite backup; file_uid, embedding space, OCR identity and models remain unchanged. Old data is retained until the user confirms migration.

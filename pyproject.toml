@@ -1,11 +1,12 @@
 [build-system]
-requires = ["setuptools>=70"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "seekdex"
 dynamic = ["version"]
-license = "MIT"
+license = "GPL-3.0-only"
+license-files = ["LICENSE", "COPYRIGHT.md", "THIRD_PARTY_LICENSES.md", "THIRD_PARTY_NOTICES.md"]
 authors = [{name = "ciqing wesley", email = "ciqing.wesley@gmail.com"}]
 description = "Local-first intelligent file and image search"
 readme = "README.md"
@@ -28,9 +29,8 @@ ocr = ["rapidocr==3.9.2", "onnxruntime>=1.23,<2"]
 seekdex = "seekdex.app:main"
 
 [project.urls]
-# Existing private repository; update after the owner's manual slug rename.
-Homepage = "https://github.com/ciqingwesley-create/local-image-search"
-Source = "https://github.com/ciqingwesley-create/local-image-search"
+Homepage = "https://github.com/ciqingwesley-create/Seekdex"
+Source = "https://github.com/ciqingwesley-create/Seekdex"
 
 [tool.setuptools.packages.find]
 where = ["src"]

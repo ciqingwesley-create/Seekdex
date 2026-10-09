@@ -1,12 +1,12 @@
 # 第三方组件与模型许可证
 
-应用代码为 MIT。此许可不替代第三方代码、原生库或模型权重许可。
+Seekdex 自有应用代码为 **GPL-3.0-only**。此许可不替代第三方代码、原生库或模型权重许可；它们的原始通知保持不变。旧 MIT 版本的既有许可不受追溯影响。
 构建脚本会收集已安装依赖中的 LICENSE / COPYING / NOTICE 和元数据到安装包 `seekdex/resources/licenses/`。
 应用源码快照也随程序提供，见 `application-source.zip`。标准版不附带模型；本地预装版按用户要求包含下列固定快照的识图 / OCR 权重和必要配置，文件来源及 SHA256 记录在 `preinstalled-models/manifest.json`。预装版未自动对外发布。
 
 | 组件 | 代码许可证 | 权重 / 原生库说明 | 上游 |
 | --- | --- | --- | --- |
-| PySide6 / Shiboken6 / 使用的 Qt Core、Gui、Widgets、Network、SVG | LGPL-3.0 / GPL-3.0 / 商业许可选项；本构建使用 LGPL 动态库 | 保留 LGPLv3、GPLv3 文本、Qt 版权和第三方说明。用户可替换独立 Qt DLL；不禁止为修改库而调试。未使用 GPL-only Qt Charts 等模块。 | https://doc.qt.io/qtforpython-6/licenses.html |
+| PySide6 / Shiboken6 / 使用的 Qt Core、Gui、Widgets、Network、SVG | LGPL-3.0 / GPL-3.0 / 商业许可选项；保持上游 LGPL / GPL 多许可声明，本构建继续按 LGPL 动态库路径提供通知与可替换方式 | 保留 LGPLv3、GPLv3 文本、Qt 版权和第三方说明。用户可替换独立 Qt DLL；不禁止为修改库而调试。未使用 GPL-only Qt Charts 等模块。 | https://doc.qt.io/qtforpython-6/licenses.html |
 | Pillow | MIT-CMU（当前 wheel 的 License-Expression；PIL 许可） | JPEG、PNG、TIFF 等编解码器各有许可，保留 wheel 中说明 | https://github.com/python-pillow/Pillow/blob/main/LICENSE |
 | NumPy | BSD-3-Clause | BLAS / LAPACK 等见其完整第三方说明 | https://github.com/numpy/numpy/blob/main/LICENSE.txt |
 | ExifRead | BSD-3-Clause | 仅提取 EXIF，不改图片 | https://github.com/ianare/exif-py/blob/master/LICENSE.txt |
@@ -29,7 +29,7 @@
 
 Chinese-CLIP 使用固定 `f4a64596bbcf9a2a94591b74b9dc39b2e4e77e3e` 快照，SHA256 与语义空间不变。代码 MIT 已核实；固定快照模型卡没有独立、明确的权重许可证字段，因此权重再分发仍为待确认项。不能把代码 MIT 等同于全部权重 MIT。未确认前只准备本地预装包，不公开上传预装权重。
 
-项目内测试图片在运行时由 Pillow 生成。公开截图由 `scripts/generate_public_screenshots.py` 生成合成媒体与虚构路径；没有分发私人 RAW / JPEG 或来源不明照片。旧 Git 历史中的私人路径与截图须在公开前人工处理。
+项目内测试图片在运行时由 Pillow 生成。公开截图由 `scripts/generate_public_screenshots.py` 生成合成媒体与虚构路径；没有分发私人 RAW / JPEG 或来源不明照片。公开仓库采用独立清理后的历史，旧私人历史只保存在私有归档与本地备份中。
 
 ## Qt / LibRaw 可修改与重链接
 
@@ -39,4 +39,4 @@ Chinese-CLIP 使用固定 `f4a64596bbcf9a2a94591b74b9dc39b2e4e77e3e` 快照，SH
 Qt `https://download.qt.io/archive/qt/`、rawpy `https://github.com/letmaik/rawpy` 与 LibRaw `https://www.libraw.org/download` 获取。
 实际依赖版本和许可文件由构建脚本记录在 `licenses/dependencies.json`，应用源码在同目录上一级的 `application-source.zip`。
 
-使用或再分发 Qt 与模型前应阅读附带的完整许可。安装包保留通知，不以本应用 MIT 替代它们。
+使用或再分发 Qt 与模型前应阅读附带的完整许可。安装包保留通知，不以本应用 GPLv3 替代它们。兼容性核对和未确认项见 `docs/licensing-audit.md`。
