@@ -9,11 +9,13 @@ permissions:
 jobs:
   pytest:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
     env:
       QT_QPA_PLATFORM: offscreen
       HF_HUB_OFFLINE: "1"
       TRANSFORMERS_OFFLINE: "1"
-      SEEKDEX_HOME: ${{ runner.temp }}/seekdex-tests
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,4 +28,6 @@ jobs:
           python -m pip install "torch>=2.6,<3" --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -e ".[dev,ai,openvino,ocr]"
       - name: Run all synthetic / fake-backend tests
+        env:
+          SEEKDEX_HOME: ${{ runner.temp }}/seekdex-tests
         run: python -m pytest -q
