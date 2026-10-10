@@ -36,6 +36,9 @@ a.binaries = [item for item in a.binaries if not
     (Path(item[0]).name.lower()=='icuuc.dll' or
      Path(item[0]).name.lower() in {name.lower() for name in excluded_qt} or
      ('poppler' in item[1].lower() and Path(item[0]).name.lower().startswith('icudt')))]
+# Seekdex only processes still images. This optional OpenCV video driver is not
+# loaded by imread/resize or RapidOCR; excluding it avoids shipping FFmpeg.
+a.binaries = [item for item in a.binaries if not Path(item[0]).name.lower().startswith('opencv_videoio_ffmpeg')]
 # Runtime wheels may contain previously downloaded models. Only libraries ship;
 # application inference always receives explicit, verified user-cache model paths.
 a.datas = [item for item in a.datas if Path(item[0]).suffix.lower() not in {'.onnx','.safetensors'}]

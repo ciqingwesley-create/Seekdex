@@ -28,6 +28,7 @@ thumbnails/
 /kernel.errors.txt
 /settings.ini
 src/seekdex/resources/licenses/
+src/seekdex/resources/compliance/
 src/seekdex/resources/application-source.zip
 src/seekdex/resources/README.md
 src/seekdex/resources/source-provenance.json

@@ -71,6 +71,19 @@ def verify_directory(directory: Path) -> dict:
     for name in ("dependencies.json", "RapidOCR-LICENSE.txt", "Chinese-CLIP-MIT.txt", "Inno-Setup-LICENSE.txt"):
         if not (licenses / name).is_file():
             raise ValueError(f"Missing upstream notice: {name}")
+    for name in ('Qt-LGPL-3.0.txt', 'LibRaw-LGPL-2.1.txt', 'GEOS-LGPL-2.1.txt'):
+        if (licenses / name).read_bytes() != (ROOT / 'packaging/notices' / name).read_bytes():
+            raise ValueError('Native license text missing or changed: ' + name)
+    plan = json.loads((resources / 'compliance/source-plan.json').read_text(encoding='utf8'))
+    if plan != json.loads((ROOT / 'packaging/compliance/source-plan.json').read_text(encoding='utf8')):
+        raise ValueError('Stale native source plan')
+    for component in plan['components']:
+        for entry in component['archives']:
+            path = (resources / 'compliance/sources' / entry['file']).resolve()
+            if not path.is_relative_to((resources / 'compliance/sources').resolve()):
+                raise ValueError('Source archive escapes payload')
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != entry['sha256']:
+                raise ValueError('Missing/changed native source archive: ' + entry['file'])
     return dict(version=VERSION,license_expression=LICENSE_EXPRESSION,commit=provenance["commit"],
                 gpl_sha256=hashlib.sha256(official).hexdigest(),source_files=count,
                 source_sha256=provenance["source_sha256"])

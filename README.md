@@ -1,5 +1,7 @@
 # Seekdex
 
+Windows 原生组件的发行审计、对应源码和待确认事项见 [Native distribution compliance](docs/native-compliance.md)。公开二进制发布前必须通过独立的 `--public-ready` 检查；版本与 SHA256 一致不等于全部许可证义务已满足。
+
 **Local search, beyond filenames.**
 
 **Seekdex · 索星仪**是一款开源、本地优先的智能文件与图片搜索工具。不止文件名的本地智能搜索。

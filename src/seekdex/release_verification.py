@@ -24,10 +24,30 @@ class RuntimeProbe(QThread):
             import rapidocr
             import openvino as ov
             import rawpy
+            import shapely
+            from PySide6.QtCore import qVersion
             from PySide6.QtGui import QImageReader
             result = dict(torch=torch.__version__,openvino=ov.__version__,
                 devices=list(ov.Core().available_devices),onnxruntime=onnxruntime.__version__,
-                rapidocr=True,rawpy=rawpy.__version__,formats=[bytes(v).decode() for v in QImageReader.supportedImageFormats()])
+                rapidocr=True,rawpy=rawpy.__version__,libraw_version=list(rawpy.libraw_version),
+                qt_runtime=qVersion(),geos_runtime=shapely.geos_version_string,
+                geos_capi_runtime=shapely.geos_capi_version_string,rawpy_features=rawpy.flags,
+                formats=[bytes(v).decode() for v in QImageReader.supportedImageFormats()])
+            # Optional local fixture is only read by this opt-in release probe.
+            # It is never copied into application resources or distributions.
+            fixture = os.environ.get('SEEKDEX_VERIFY_RAW')
+            if fixture:
+                from .search import inspect_image, render_thumbnail
+                from .ai.images import read_ai_image
+                from .ocr.images import read_ocr_image
+                path = Path(fixture)
+                width, height, _ = inspect_image(path)
+                assert width > 0 and height > 0 and render_thumbnail(path)
+                with read_ai_image(path) as image:
+                    assert min(image.size) > 0
+                with read_ocr_image(path) as image:
+                    assert min(image.size) > 0
+                result['raw_preview_probe'] = 'PASS'
         except Exception as exc:
             result["error"] = f"{type(exc).__name__}: {exc}"
         self.ready.emit(result)

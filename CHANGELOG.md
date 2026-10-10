@@ -1,5 +1,12 @@
 # 发布说明
 
+## 未发布 — Windows 原生组件许可证整改
+
+- 扫描实际 PE 原生文件、SHA256、版本、wheel 来源和 DLL 传递依赖，比较独立解包的 Portable / Setup。
+- 标准包加入已校验的 Qt、LibRaw、GEOS 源码材料和原始 LGPL 文本。
+- 保留 OCR 所需 GEOS，排除未使用的 OpenCV FFmpeg 视频驱动，执行图片 / OCR 回归。
+- 增加严格公开发行检查；未确认的嵌入依赖、构建信息和库替换事项仍标为 BLOCKED，不自动创建 Tag / Release。
+
 版本由 `src/seekdex/app_info.py` 统一提供，构建时自动生成版本化发布说明。
 
 ## 0.5.0-rc2 — 发行内容一致性修复（2026-10-10）

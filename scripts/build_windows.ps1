@@ -32,6 +32,8 @@ $portableExe = Join-Path $workspaceRoot 'dist\Seekdex\Seekdex.exe'
 if (-not (Test-Path -LiteralPath $portableExe)) { throw 'Portable EXE 不存在。' }
 & $pythonExe scripts/release_licenses.py --stage
 if ($LASTEXITCODE -ne 0) { throw 'GPL 正文、通知或源码归档校验失败。' }
+& $pythonExe scripts/native_compliance.py --directory (Join-Path $workspaceRoot 'dist\Seekdex') --output (Join-Path $workspaceRoot 'dist\Seekdex\native-inventory.json')
+if ($LASTEXITCODE -ne 0) { throw '原生发行文件扫描失败。' }
 & $pythonExe scripts/release_checks.py --verify-exe
 if ($LASTEXITCODE -ne 0) { throw '实际 EXE 版本、许可证、主页或源码提交不一致。' }
 New-Item -ItemType Directory -Force -Path (Join-Path $workspaceRoot 'release') | Out-Null

@@ -11,6 +11,7 @@ Seekdex 自有应用代码为 **GPL-3.0-only**。此许可不替代第三方代�
 | NumPy | BSD-3-Clause | BLAS / LAPACK 等见其完整第三方说明 | https://github.com/numpy/numpy/blob/main/LICENSE.txt |
 | ExifRead | BSD-3-Clause | 仅提取 EXIF，不改图片 | https://github.com/ianare/exif-py/blob/master/LICENSE.txt |
 | rawpy | MIT | 随 wheel 的 LibRaw 是 LGPL-2.1 / CDDL 双许可组件，不能把 LibRaw 称为 MIT | https://github.com/letmaik/rawpy/blob/main/LICENSE |
+| Shapely / GEOS | Shapely BSD-3-Clause；GEOS 保留原 LGPLv2.1 系列许可 | OCR 后处理实际需要 GEOS 3.13.1，不由 Shapely 的 BSD 许可替代 | https://github.com/libgeos/geos/blob/3.13.1/COPYING |
 | PyTorch | BSD-3-Clause | 保留其原生依赖许可；当前 Windows 构建使用 CPU wheel | https://github.com/pytorch/pytorch/blob/main/LICENSE |
 | OpenVINO | Apache-2.0 | CPU / GPU 插件及第三方依赖保留独立说明 | https://github.com/openvinotoolkit/openvino/blob/master/LICENSE |
 | Transformers / Hugging Face Hub / Safetensors | Apache-2.0 | 可选模型与库不是同一种许可 | https://github.com/huggingface/transformers/blob/main/LICENSE |
@@ -35,8 +36,14 @@ Chinese-CLIP 使用固定 `f4a64596bbcf9a2a94591b74b9dc39b2e4e77e3e` 快照，SH
 
 本程序使用 onedir 动态分发，不静态链接 Qt / LibRaw，不限制更换 LGPL 动态库或为此调试。
 在兼容 ABI / 架构下可替换 `_internal/PySide6/` 的 Qt DLL；rawpy 原生库可能需按其官方 wheel 构建流程重新构建扩展。
-对应未修改的上游源码可从 Qt 官方 `https://download.qt.io/official_releases/QtForPython/`、
-Qt `https://download.qt.io/archive/qt/`、rawpy `https://github.com/letmaik/rawpy` 与 LibRaw `https://www.libraw.org/download` 获取。
+准确版本的已校验源码和构建输入随新标准包提供，位于 `_internal/seekdex/resources/compliance/sources/`。
+具体 URL、SHA256、LibRaw 子模块提交和待确认构建信息见 `compliance/source-plan.json`。
+这些材料不能证明所有嵌入依赖、上游补丁或构建选项均已匹配，不能用上游首页链接替代发行者的源码提供义务。
 实际依赖版本和许可文件由构建脚本记录在 `licenses/dependencies.json`，应用源码在同目录上一级的 `application-source.zip`。
 
 使用或再分发 Qt 与模型前应阅读附带的完整许可。安装包保留通知，不以本应用 GPLv3 替代它们。兼容性核对和未确认项见 `docs/licensing-audit.md`。
+
+Qt LGPLv3、LibRaw / GEOS LGPLv2.1 原文另行保留。Qt 商业许可参考文本不代表本项目取得商业授权。
+实际原生清单为根目录 `native-inventory.json`。新包排除 OpenCV 的可选 FFmpeg 视频 DLL，保留 GEOS。
+完整对应源码、库替换、嵌入依赖及 Microsoft 运行库发行权限仍需逐项核实，见 [合规流程](docs/native-compliance.md)。
+`scripts/release_checks.py --public-ready` 在未确认事项存在时失败；普通一致性检查通过不表示合规整改全部完成。

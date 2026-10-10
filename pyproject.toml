@@ -20,7 +20,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10"]
-build = ["pyinstaller>=6.20,<7"]
+build = ["pyinstaller>=6.20,<7", "pefile>=2024.8.26"]
 ai = ["torch>=2.6,<3", "transformers>=4.48,<5", "huggingface-hub>=0.30,<1", "safetensors>=0.5,<1", "numpy>=2,<3"]
 openvino = ["openvino>=2025.0,<2027"]
 ocr = ["rapidocr==3.9.2", "onnxruntime>=1.23,<2"]
@@ -39,7 +39,7 @@ where = ["src"]
 version = {attr = "seekdex.app_info.PACKAGE_VERSION"}
 
 [tool.setuptools.package-data]
-seekdex = ["resources/*", "resources/licenses/**/*"]
+seekdex = ["resources/*", "resources/licenses/**/*", "resources/compliance/**/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

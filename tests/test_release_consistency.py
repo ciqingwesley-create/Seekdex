@@ -129,6 +129,7 @@ def test_payload_modified_after_verification_rejected(tmp_path, monkeypatch, pro
     monkeypatch.setattr(checks, "preflight", lambda: "a" * 40)
     monkeypatch.setitem(sys.modules, "release_licenses", SimpleNamespace(verify_directory=lambda _: None))
     (tmp_path / "Seekdex.exe").write_bytes(b"verified executable")
+    (tmp_path / 'native-inventory.json').write_text(json.dumps({'native': []}))
     files = checks.payload_hashes(tmp_path)
     runtime = dict(provenance, exe_sha256=files["Seekdex.exe"])
     (tmp_path / "build-verification.json").write_text(json.dumps(dict(runtime=runtime, files=files)))

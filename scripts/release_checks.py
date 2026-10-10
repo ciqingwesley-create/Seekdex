@@ -13,6 +13,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 from seekdex import app_info
 from seekdex.release_identity import identity, read_pe_identity, sha256, validate_identity, validate_pe
 
@@ -83,6 +84,9 @@ def verify_receipt(directory: Path) -> dict:
     if receipt["runtime"].get("exe_sha256") != receipt["files"].get("Seekdex.exe"):
         raise ValueError("Unverified executable")
     standard_payload(receipt["files"])
+    from native_compliance import verify_inventory
+    native = json.loads((directory / 'native-inventory.json').read_text(encoding='utf8'))
+    verify_inventory(directory, native)
     return receipt
 
 
@@ -153,6 +157,7 @@ def main() -> None:
     parser.add_argument("--record-installer", type=Path)
     parser.add_argument("--portable-only", action="store_true")
     parser.add_argument("--tag", help="Verify an existing local tag; never create or change it")
+    parser.add_argument('--public-ready', action='store_true', help='Fail if native distribution obligations remain unverified')
     args = parser.parse_args()
     directory = ROOT / "dist/Seekdex"
     if args.preflight:
@@ -166,6 +171,12 @@ def main() -> None:
         if args.tag:
             verify_tag(args.tag, result["commit"])
             result["verified_tag"] = args.tag
+    if args.public_ready:
+        from native_compliance import require_public_ready, validate_sources
+        native = json.loads((directory / 'native-inventory.json').read_text(encoding='utf8'))
+        plan = json.loads((ROOT / 'packaging/compliance/source-plan.json').read_text(encoding='utf8'))
+        sources = validate_sources(plan, directory / '_internal/seekdex/resources/compliance/sources')
+        require_public_ready(native, sources)
     print(json.dumps(result, indent=2))
 
 

@@ -46,8 +46,9 @@ def main():
         files = []
         for record in dist.files or []:
             if any(part.lower() in {".venv","models"} for part in record.parts):continue
+            if '__pycache__' in record.parts or Path(str(record)).suffix.lower() in {'.py', '.pyc', '.dll', '.pyd', '.exe'}:continue
             filename = Path(str(record)).name.lower()
-            if not (filename.startswith(("license","licence","copying","notice","copyright","third_party_notices"))
+            if not (filename.startswith(("license","licence","copying","notice","copyright","third_party_notices","thirdpartynotices","third-party"))
                     or any(part.lower() in {"licenses", "license", "licences"} for part in record.parts)):continue
             source = Path(dist.locate_file(record))
             if not source.is_file():continue
@@ -62,6 +63,24 @@ def main():
     if python_license.exists():shutil.copy2(python_license,licenses/"Python-LICENSE.txt")
     for source in (ROOT / "packaging/notices").glob("*.txt"):
         shutil.copy2(source, licenses / source.name)
+    compliance = resources / 'compliance'
+    if compliance.exists():
+        if not compliance.resolve().is_relative_to((ROOT / 'src/seekdex/resources').resolve()):
+            raise ValueError('Unsafe generated compliance directory')
+        shutil.rmtree(compliance)
+    shutil.copytree(ROOT / 'packaging/compliance', compliance)
+    shutil.copy2(ROOT / 'docs/native-compliance.md', resources / 'compliance/README.md')
+    source_plan = json.loads((ROOT / 'packaging/compliance/source-plan.json').read_text(encoding='utf8'))
+    source_target = resources / 'compliance/sources'
+    source_target.mkdir(exist_ok=True)
+    for component in source_plan['components']:
+        for entry in component['archives']:
+            source = ROOT / '.verification/third-party-sources' / entry['file']
+            if not source.resolve().is_relative_to((ROOT / '.verification/third-party-sources').resolve()):
+                raise ValueError('Unsafe corresponding-source path')
+            if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != entry['sha256']:
+                raise ValueError('Missing/changed corresponding source; run scripts/fetch_native_sources.py: ' + entry['file'])
+            shutil.copy2(source, source_target / entry['file'])
     (licenses/"dependencies.json").write_text(json.dumps(inventory,ensure_ascii=False,indent=2),encoding="utf8")
     # Tracked files include build scripts/workflows; ignore private runtime trees.
     tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT).decode("utf8").strip("\0").split("\0")

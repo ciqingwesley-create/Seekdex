@@ -1,0 +1,355 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-10",
+  "tested_application_commit": "183d4b817c57cdf3b224a1c560dd69b5828214d4",
+  "results": [
+    {
+      "component": "Qt matched alternate set",
+      "status": "PASS",
+      "checks": [
+        "complete_gplv3_license_and_metadata",
+        "actual_EXE_version_license_homepage_source_commit",
+        "packaged_About_version_GPL_homepage",
+        "first_launch_wizard_7_steps_and_optional_skips",
+        "multi_directory_search_overlap_dedup",
+        "visible_thumbnails_capture_time_and_camera_metadata",
+        "camera_filter",
+        "resolution_filter",
+        "capture_date_filter",
+        "filename_filter",
+        "extension_filter",
+        "list_sort_and_grid_view",
+        "details_sidebar",
+        "system_default_file_open_requested",
+        "index_management_counts",
+        "Qt_plugins_torch_openvino_ocr_rawpy_DLLs",
+        "offline_ocr_query",
+        "offline_AI_query",
+        "similar_image_search",
+        "AI_plus_OCR",
+        "existing_embedding_and_OCR_identity",
+        "organization_preview_does_not_modify_files",
+        "move_and_undo",
+        "settings_saved",
+        "window_restart_profile_restored_no_repeat_wizard",
+        "database_integrity"
+      ],
+      "changes": [
+        {
+          "path": "_internal/shiboken6/Shiboken.pyd",
+          "before": "2f6f3a694f675b1dafdae26903191613c02866ab48e02591ae34ca1a3b1284f1",
+          "after": "0e2c5318c5ac60a016a12230bbb1f6a9d990c45cbf4a7c4af24aefb5ab7dc40a"
+        },
+        {
+          "path": "_internal/shiboken6/msvcp140.dll",
+          "before": "fd4a8c046fa3fea9ca6132f50cf8a56cf1e783b2d3093ba5c85fa063bc6b3845",
+          "after": "005f2324c7ff79bbe9a44992b0708abb4c871bd24bcc7a34aca5eab4439c1f4a"
+        },
+        {
+          "path": "_internal/shiboken6/msvcp140_1.dll",
+          "before": "7f556f0a0b944df7b64b916b344a070b7e6f6cf342194475594447ca88c07659",
+          "after": "d878d7cb27187247a3ce1adfdf1f9b7b703e4429bc55f3e95284a43e80c10151"
+        },
+        {
+          "path": "_internal/shiboken6/shiboken6.abi3.dll",
+          "before": "de3c6b2ed5f75c9ac0de4a6844b653b3b9d09263ce68c2b5fc25a96c5c3e8469",
+          "after": "47f4f9b44c95037565dd14f4be04f350f20c53c05483b750e0be867c39a7441e"
+        },
+        {
+          "path": "_internal/shiboken6/vcruntime140.dll",
+          "before": "de617641d82eac15595d2e39394163ac33e49bb032cf2c2ea0044ed39d3675e9",
+          "after": "8d9c679c825c5fff298d66c41af30f35c289fc101868dfc9635547bada0daba6"
+        },
+        {
+          "path": "_internal/shiboken6/vcruntime140_1.dll",
+          "before": "fa577d54bd10a91e52472da784a619da6cf241af45f0a0c48b27e91fa0fe6104",
+          "after": "e4d7ea5f4f4ff6d0c208e693853617cdef0ad71cfe5dd5c3ae16c8a6b64c18ea"
+        },
+        {
+          "path": "_internal/PySide6/Qt6Core.dll",
+          "before": "d6a3c37c5263c5d418fc0e80b722bc9fca7c0859e6f635f9624a2fde00bdc653",
+          "after": "65fe6224b6c47a15b058738031d31dce9928c4d7a58e1b8db6434f6f5cddd702"
+        },
+        {
+          "path": "_internal/PySide6/Qt6Gui.dll",
+          "before": "ae29b005f51b6850bf57fa06fced0dc8c7039fd6fafc3bfbcfe76e38adc7abf1",
+          "after": "cd071161ad325ff2de92b0e33d71334ef20712544796949623ce92dfb3957e90"
+        },
+        {
+          "path": "_internal/PySide6/Qt6Network.dll",
+          "before": "dd3512d1c5ed062d30c98426cd0a850f13e0cf31437afb5b0b474132b9c52922",
+          "after": "dfd0dd852274a5fe9b3c7d2dd9fffe7e2117d28c10fc862174d6675d42395177"
+        },
+        {
+          "path": "_internal/PySide6/Qt6OpenGL.dll",
+          "before": "d51088f16db8c96dba7ef3c1474e611adb3ebdb211fea35b8e755d2a7407f7ad",
+          "after": "b31d20dc5ab28731d43ac5312c46c8fe1c39ea3e9614c46e6419b4debc87c1eb"
+        },
+        {
+          "path": "_internal/PySide6/Qt6Svg.dll",
+          "before": "1eac8f7415b311a88cb3cb4e25c3098d0e059c24c831fbbb13f43a80f0df06b7",
+          "after": "a7352e8062d02e2108e37db4050fb3315d3c03c7d36acdc24b98b9a6c129c1de"
+        },
+        {
+          "path": "_internal/PySide6/Qt6Widgets.dll",
+          "before": "ff0df9e2e6827e035f0731a4cedfc6333f4602bca00775e56346f27032406b74",
+          "after": "5a9f37dedd3dc5bcc1a4bb8ea919c49fc62df751a1450accc34379eb6710eab6"
+        },
+        {
+          "path": "_internal/PySide6/QtCore.pyd",
+          "before": "74f96322c5e9cea73aefd2ed5870e5275336b31f552fcd32f12fc81d23f1bc6f",
+          "after": "be52341a5df1f76ecca2fb1e94eb429dfa46f0b659ed6536f25119b565b21ea8"
+        },
+        {
+          "path": "_internal/PySide6/QtGui.pyd",
+          "before": "7bef20046045199c037b7cbfedaa1c5464730fa948b2c9ec8afbf718e63774d4",
+          "after": "f0549716b10a8b4fbd5c6c041f36af215223809f919f4c4722d44cc199d5c593"
+        },
+        {
+          "path": "_internal/PySide6/QtNetwork.pyd",
+          "before": "c5038bb71fc9d57330fa2d8eeec65aab69fcf02687cc8f54dbfb5995cfec6a71",
+          "after": "3953a86c9545ad8fa1cf1dec27085dd357838464cd6e2131c9963caad6234b67"
+        },
+        {
+          "path": "_internal/PySide6/QtWidgets.pyd",
+          "before": "f12f4ca641998e5706d5f7b0023147d573f0f2d2361e26dadf31bdbf05fbfd1d",
+          "after": "85cb6c2181b4b09887a7d8507dd950844d1b8f74a9c4002c7b71169f75bf6fda"
+        },
+        {
+          "path": "_internal/PySide6/msvcp140.dll",
+          "before": "4c667b706893593812cd111b369ba6a77f54d1f1b1ae87cf3bf37692663cfba2",
+          "after": "708dd7bbc7bd23bce9e93f7837a70c2dd7ad55cff43801e92c0f7fcd7dda47cd"
+        },
+        {
+          "path": "_internal/PySide6/msvcp140_1.dll",
+          "before": "d419d24b0a76366f5c9d908b0e45fe70e9e9154bb8ad5f3de42070f2337f857b",
+          "after": "b2113956aa3fcb9decfe65be1ee7829f8e3ae0899633ae89fe04888ada201594"
+        },
+        {
+          "path": "_internal/PySide6/msvcp140_2.dll",
+          "before": "89917964abb6ca16a260cab258e180c3abc239b5af00eed659d0edf0efdd339c",
+          "after": "1b806b427ffb573deff8478cf6fe336465fe2c67e0919bb95f452b6f31d25736"
+        },
+        {
+          "path": "_internal/PySide6/opengl32sw.dll",
+          "before": "34b444c016289b560662ff896deceb7f4b2c0723aed3d319ae167c9186ce42b3",
+          "after": "4a7d90f91fdecb5df7b426bc2d05974b8d7ffa450af2d1f93f3eca05800718da"
+        },
+        {
+          "path": "_internal/PySide6/pyside6.abi3.dll",
+          "before": "d0b5c701fb3a8ea839e72b602058f3960935156ebeca084893c54c99e54dd707",
+          "after": "d4072be872b31f3748de5e6c28cb2976dafbf063d3ccfa38e5dabda29babcdaf"
+        },
+        {
+          "path": "_internal/PySide6/vcruntime140.dll",
+          "before": "f893ae75a1a24eea174d982f94bc80ce2448201eaa919a73c0653a5657685de4",
+          "after": "c6e841078cd352299a58925991e2552f7251b046253ba895b3ad50cd5cd32ec6"
+        },
+        {
+          "path": "_internal/PySide6/vcruntime140_1.dll",
+          "before": "48aa2783793ea18ab3c2c71d420d4fff9814e662a1ff810053c6e5250061a716",
+          "after": "b322e382ea249b50009f14a9a71ad16729eb6e4b58a8d3b3be6ac66ea6342a22"
+        },
+        {
+          "path": "_internal/PySide6/plugins/generic/qtuiotouchplugin.dll",
+          "before": "aa9080fa8b1c3cf4d3790c1eecf4a1f5c796ce58f31f80910357578f20fd80ac",
+          "after": "1ee2810eef83dbb2740d4f796f8149dc5752ffd3dd60e39796a9a4d6a6a0ae38"
+        },
+        {
+          "path": "_internal/PySide6/plugins/iconengines/qsvgicon.dll",
+          "before": "5bb97b6f114682ae0b5f42b23b6818aece6499bad88dac80a138efa8a88c12bc",
+          "after": "dd60826f1959faa7ea137e00959717450da9f2e0c151054daeff1e9d1226fab2"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qgif.dll",
+          "before": "d301d7e9a68327692e4c76faa6b125517730b22c68f4de7f09fda9d4ac0ddee1",
+          "after": "8b8dea2abaed333f1fbbdf3c8867ceb6040722c88a1fb81ea451f8b8bc9e8ee0"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qicns.dll",
+          "before": "49db148fea9f01e9953fd0a771d16cfaf364599f07aab3634d4f5c7c25abd78a",
+          "after": "6a5aed435989d54234c16581e66f6a59137bfccd180565a217a8676bcda6dc8d"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qico.dll",
+          "before": "1684fd56f1758167f7b3ac011264ae5859b3cf6113e381626ec3dc1d3122fe52",
+          "after": "f81378dd51392ff0d3ae094d5e59dfc4fa664a0ef4d756d6ed40584f90af2758"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qjpeg.dll",
+          "before": "6517345ac19f5c489daeadc029d0018bbdc09d8e1031c60d714557972f22c6d4",
+          "after": "97af9ceaf3ebefefeb7aede27ae07b73ae1d2ed479427beebf61c58654361d43"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qsvg.dll",
+          "before": "4b7d65ba39be58cb469b54b5fdee2987871d67e5050cd70724016e09966e54f6",
+          "after": "d4100055c3a4d6c1bca5e303e3d2049bde54d4e916442ee0a3e9b4dfa7d416fc"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qtga.dll",
+          "before": "6b0381150070fcd4224597fe73c68b47055b30b418aa14794c94c5007d14ca5d",
+          "after": "50f0e6ff9b7fca9386ccad52eb5e83466774e6282c9532b03b11e5a64951dffb"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qtiff.dll",
+          "before": "3d6ea04da215ee2a9459399fb9f6d73cad8787944b9d450399025bcd39d020b5",
+          "after": "087a3425962e838c35c9073bdf8de13712466e9b9590717666af7839db068dba"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qwbmp.dll",
+          "before": "1a4596509987e9557edda69ed13cdd0d33f4ebda72e464ddc00a566bec05f151",
+          "after": "28a6447d44169acbf2eab38c475dc0aa9e32abb3f29f72257726497353b9bf63"
+        },
+        {
+          "path": "_internal/PySide6/plugins/imageformats/qwebp.dll",
+          "before": "6b2c53cc4423140c29a6a1eb6dd908016e09d794b5739a05a3a39c8c49a0df8a",
+          "after": "3e2bf546a3885cbe3e2b64058b1c58377d3c8822f51b37ba967f61e8054d7719"
+        },
+        {
+          "path": "_internal/PySide6/plugins/networkinformation/qnetworklistmanager.dll",
+          "before": "e571a4b4e582738cd1bc4889cb2896635c2543baff408442701b6706a1b4a86e",
+          "after": "aeef84e74d3114f62f4650305b403ef9f81e8c05bc67c86683d999c5c1243926"
+        },
+        {
+          "path": "_internal/PySide6/plugins/platforms/qdirect2d.dll",
+          "before": "56f41ad523d016fe2cf2c90fae158e21766d1fcd021bced1a3704c6da0f00c98",
+          "after": "f099af483b0d71a6a028bc15ad98a407e4c820400e6626cdc8e66b5f5e4cfed2"
+        },
+        {
+          "path": "_internal/PySide6/plugins/platforms/qminimal.dll",
+          "before": "768a9c6dbb1c86abbefa2ff9d7e98cdfb4fdc9292eb8d64195bb6d23939a5344",
+          "after": "97d81b9ee7cbbeb68e46eefce24d4b929b7a24cc646cebe3d4d03e2734f97935"
+        },
+        {
+          "path": "_internal/PySide6/plugins/platforms/qoffscreen.dll",
+          "before": "e776251668440169ed18a2fe1b236762d514ef5244639cbb559b5a77ddd38954",
+          "after": "426266e8ba0ea07c416616ad9973702fe126d4559cb2ee11e1c9bdbae85ba755"
+        },
+        {
+          "path": "_internal/PySide6/plugins/platforms/qwindows.dll",
+          "before": "bf6dbc3009f386fa22f0ced560bea6bbf3e0e0b4442d2fb855db67cffce49dbf",
+          "after": "54d736de022f707e9f7f555e4c9f9e993253cd5b0ee2364e6a9458c180828c42"
+        },
+        {
+          "path": "_internal/PySide6/plugins/styles/qmodernwindowsstyle.dll",
+          "before": "a7a6424c23bf371bd28a404a196b210971726f6f2a87b63aac185a5e6e40da71",
+          "after": "9af96b09ebaf7ff13e22c70bf69b9c3f226f069375d1a9f9efd63e944e43f5fb"
+        },
+        {
+          "path": "_internal/PySide6/plugins/tls/qcertonlybackend.dll",
+          "before": "67be4d333a0f489d02714169a6ec54eaa80efa649d733fcbeb81881ecb02b4f3",
+          "after": "45b9f59593a1567f7d6725ddfa53f667f8f26b7795b1e2d0e1080a4025bafc02"
+        },
+        {
+          "path": "_internal/PySide6/plugins/tls/qopensslbackend.dll",
+          "before": "7a0727417b8e21e64d9a7cf0f390bc85b3e337b4eef5ac977f49659d97e6b552",
+          "after": "c7222880a7defe7a5c84f5871cdc7e34df22f3de6646026683042fab5c22b561"
+        },
+        {
+          "path": "_internal/PySide6/plugins/tls/qschannelbackend.dll",
+          "before": "14abc5b245c0f2e03f7bc0b474a8db2ecb441c7300a8a8b16fb865eaf2674619",
+          "after": "d09487a64be0e1d4545a8230e7fe05d163375610adf175407a6742944f16deb9"
+        }
+      ],
+      "scope": "separate directory/profile on host, not clean VM/Sandbox",
+      "limitation": "Host directory/profile isolation; clean Windows VM remains untested."
+    },
+    {
+      "component": "GEOS modified source build",
+      "status": "PASS",
+      "checks": [
+        "complete_gplv3_license_and_metadata",
+        "actual_EXE_version_license_homepage_source_commit",
+        "packaged_About_version_GPL_homepage",
+        "first_launch_wizard_7_steps_and_optional_skips",
+        "multi_directory_search_overlap_dedup",
+        "visible_thumbnails_capture_time_and_camera_metadata",
+        "camera_filter",
+        "resolution_filter",
+        "capture_date_filter",
+        "filename_filter",
+        "extension_filter",
+        "list_sort_and_grid_view",
+        "details_sidebar",
+        "system_default_file_open_requested",
+        "index_management_counts",
+        "Qt_plugins_torch_openvino_ocr_rawpy_DLLs",
+        "offline_ocr_query",
+        "offline_AI_query",
+        "similar_image_search",
+        "AI_plus_OCR",
+        "existing_embedding_and_OCR_identity",
+        "organization_preview_does_not_modify_files",
+        "move_and_undo",
+        "settings_saved",
+        "window_restart_profile_restored_no_repeat_wizard",
+        "database_integrity"
+      ],
+      "changes": [
+        {
+          "path": "_internal/Shapely.libs/geos-ae6efa0782962b98e358f10ea539ae5f.dll",
+          "before": "094508747b6bb6eb785b2aa67d7899724ce78ee6cc375e7a66e11be3bcf5a08e",
+          "after": "3a66f8e8a20e827ba7128c9ede38e23351c813ae16c840e5a440cdffd5c5c82d"
+        },
+        {
+          "path": "_internal/Shapely.libs/geos_c-072b7a9224d16d3e4ab2395bb855b2d3.dll",
+          "before": "7e4d87ccb640eda92f150b7cee178ef13abe282acd36af08f6dca5eddaf931a4",
+          "after": "8a5b4679b89c9d9e1c200ea2c986dc9479be6abcf3b0d2f1fd9a0f5adf7a3c13"
+        },
+        {
+          "path": "_internal/Shapely.libs/libgeos.dll",
+          "before": null,
+          "after": "3a66f8e8a20e827ba7128c9ede38e23351c813ae16c840e5a440cdffd5c5c82d"
+        },
+        {
+          "path": "_internal/Shapely.libs/libwinpthread-1.dll",
+          "before": null,
+          "after": "5e28db9c1ed427c6e4d58096d9324161ea160506769b5cf4049fe6152f42abaf"
+        }
+      ],
+      "scope": "separate directory/profile on host, not clean VM/Sandbox",
+      "limitation": "Host directory/profile isolation; clean Windows VM remains untested."
+    },
+    {
+      "component": "LibRaw alternate DLL",
+      "status": "PASS",
+      "checks": [
+        "complete_gplv3_license_and_metadata",
+        "actual_EXE_version_license_homepage_source_commit",
+        "packaged_About_version_GPL_homepage",
+        "first_launch_wizard_7_steps_and_optional_skips",
+        "multi_directory_search_overlap_dedup",
+        "visible_thumbnails_capture_time_and_camera_metadata",
+        "camera_filter",
+        "resolution_filter",
+        "capture_date_filter",
+        "filename_filter",
+        "extension_filter",
+        "list_sort_and_grid_view",
+        "details_sidebar",
+        "system_default_file_open_requested",
+        "index_management_counts",
+        "Qt_plugins_torch_openvino_ocr_rawpy_DLLs",
+        "offline_ocr_query",
+        "offline_AI_query",
+        "similar_image_search",
+        "AI_plus_OCR",
+        "existing_embedding_and_OCR_identity",
+        "organization_preview_does_not_modify_files",
+        "move_and_undo",
+        "settings_saved",
+        "window_restart_profile_restored_no_repeat_wizard",
+        "database_integrity"
+      ],
+      "changes": [
+        {
+          "path": "_internal/rawpy/raw_r.dll",
+          "before": "135e783d3f13a457ffaef2b31ac659e7386082a587718090f8f5cf416f029645",
+          "after": "da20108e301a929170fe1af2acb2ef7e5de62347057f860139fda111d504fa39"
+        }
+      ],
+      "scope": "separate directory/profile on host, not clean VM/Sandbox",
+      "limitation": "Host directory/profile isolation; clean Windows VM remains untested."
+    }
+  ]
+}
