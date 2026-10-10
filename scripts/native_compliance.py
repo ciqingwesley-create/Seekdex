@@ -89,6 +89,7 @@ def scan(directory: Path, owners: dict | None = None, policy: dict | None = None
         row['source'] = matched.get('source') if matched else None
         row['review_status'] = matched.get('status', 'BLOCKED') if matched else 'BLOCKED'
         row['evidence'] = matched.get('evidence', []) if matched else []
+        row['embedded_component_candidates'] = matched.get('embedded_component_candidates', []) if matched else []
         row['native_version'] = matched.get('native_version') if matched else None
         row['version_status'] = 'PASS' if row['pe_version'] or row['native_version'] else 'BLOCKED'
         native.append(row)

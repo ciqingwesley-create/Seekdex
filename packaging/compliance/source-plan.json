@@ -77,10 +77,50 @@
           "component": "rawpy-build-inputs",
           "file": "rawpy-0.27.1-build-inputs.zip",
           "url": "https://github.com/letmaik/rawpy/tree/v0.27.1",
-          "sha256": "2de55d4b7608a56dea14c466c7a0ddff7d543f62a76d0b93a466ee4c73a6efac",
-          "bytes": 54287,
+          "sha256": "ed100a38e3bc8f96f1c3d1df1e07ace4617379ad568e571425139f7c45e1a340",
+          "bytes": 78386,
           "derived_from": "rawpy-source.tar.gz",
           "excludes": "upstream tests, examples and logo media; build code and original licenses retained"
+        },
+        {
+          "file": "zlib-1.3.2-source.tar.gz",
+          "url": "https://codeload.github.com/madler/zlib/tar.gz/refs/tags/v1.3.2",
+          "sha256": "b99a0b86c0ba9360ec7e78c4f1e43b1cbdf1e6936c8fa0f6835c0cd694a495a1",
+          "bytes": 1566911,
+          "upstream_sha512": "16fea4df307a68cf0035858abe2fd550250618a97590e202037acd18a666f57afc10f8836cbbd472d54a0e76539d0e558cb26f059d53de52ff90634bbf4f47d4",
+          "status": "PASS"
+        },
+        {
+          "file": "libjpeg-turbo-3.2.0-source.tar.gz",
+          "url": "https://codeload.github.com/libjpeg-turbo/libjpeg-turbo/tar.gz/refs/tags/3.2.0",
+          "sha256": "980dd81f425082aa6d7c9e47fef27554ce7a9ffc8e2f6e863b97d263c5c50858",
+          "bytes": 2537858,
+          "upstream_sha512": "1ce063e9e126d55019385da3a6ff4521a9a3958edeab15e2465ae3435026dac6e598277eea066173ada47da37159d0f7812b2227869c10dd141dcfe2ddeab720",
+          "status": "PASS"
+        },
+        {
+          "file": "jasper-4.2.9-source.tar.gz",
+          "url": "https://codeload.github.com/jasper-software/jasper/tar.gz/refs/tags/version-4.2.9",
+          "sha256": "b0e5af6b54c274b9670c7e32ddbf6c802d88c896062d760267695dd0aa7014ff",
+          "bytes": 2004456,
+          "upstream_sha512": "5c74521150f49a1055b909e01629ced3b97f222d0d81b0f5b42dcca4915fff11a11e247cc1ec37bcb669b819812892c950ec980275cbebe9897a2aec8b52ab3d",
+          "status": "PASS"
+        },
+        {
+          "file": "lcms-2.19.1-source.tar.gz",
+          "url": "https://codeload.github.com/mm2/Little-CMS/tar.gz/refs/tags/lcms2.19.1",
+          "sha256": "267705e278e2f7c2fb886c259dadcbaeb2be52748bcbc71c79f08aacacb7a709",
+          "bytes": 5731108,
+          "upstream_sha512": "1b2781ed8898e65f15be17cf0130a1500ec0bf5ca5159f871dff5692e387747be9526feef0bc7c370200656fc0aabe3036746041285a3978e90adec200d685f2",
+          "status": "PASS"
+        },
+        {
+          "file": "vcpkg-2026.07.29-source.tar.gz",
+          "url": "https://codeload.github.com/microsoft/vcpkg/tar.gz/refs/tags/2026.07.29",
+          "sha256": "6b1a5b0170fda8e585b258fa416e4251197bba4633414d2ac00f02625c78194e",
+          "bytes": 5334450,
+          "upstream_sha512": null,
+          "status": "PASS"
         }
       ],
       "binary_source_mapping_verified": false,
@@ -89,7 +129,8 @@
       "replacement_verified": false,
       "status": "BLOCKED",
       "remaining": "Exact release build/toolchain/patch and nested-library mapping remain unverified. Source archives and replacement test evidence are prepared; public source access/installation obligations need review.",
-      "replacement_evidence": "replacement-evidence.json: actual alternate libraries; host directory/profile isolation, not VM"
+      "replacement_evidence": "replacement-evidence.json: actual alternate libraries; host directory/profile isolation, not VM",
+      "rebuild_inputs": "Original rawpy .github/scripts/build-windows.ps1; vcpkg 2026.07.29 x64-windows-static port recipes/patches; zlib 1.3.2, libjpeg-turbo 3.2.0 jpeg8, JasPer 4.2.9, Little CMS 2.19.1; exact official wheel compiler/patch provenance still needs confirmation."
     },
     {
       "component": "GEOS 3.13.1 / Shapely 2.1.2",

@@ -112,6 +112,23 @@ def test_changed_native_wheel_invalidates_source_mapping(monkeypatch):
         compliance.verify_environment({'wheel_versions': {'component': '1.0'}})
 
 
+def test_build_inputs_include_windows_recipes_and_exclude_raw_media(tmp_path):
+    import io
+    import tarfile
+    import zipfile
+    from fetch_native_sources import rawpy_build_inputs
+    source, output = tmp_path / 'source.tar.gz', tmp_path / 'inputs.zip'
+    with tarfile.open(source, 'w:gz') as archive:
+        for name in ('rawpy/.github/scripts/build-windows.ps1', 'rawpy/vcpkg.json',
+                     'rawpy/rawpy/module.pyx', 'rawpy/test/camera.nef', 'rawpy/logo/logo.png'):
+            item = tarfile.TarInfo(name)
+            item.size = 4
+            archive.addfile(item, io.BytesIO(b'test'))
+    rawpy_build_inputs(source, output)
+    with zipfile.ZipFile(output) as archive:
+        assert set(archive.namelist()) == {'.github/scripts/build-windows.ps1', 'vcpkg.json', 'rawpy/module.pyx'}
+
+
 def test_replacement_does_not_modify_hard_linked_original(tmp_path):
     from verify_lgpl_replacement import clone_bundle, replace_file
     original = tmp_path / 'original'

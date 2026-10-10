@@ -32,7 +32,7 @@ def rawpy_build_inputs(original: Path, destination: Path) -> None:
             name = member.name.split('/', 1)[-1]
             if member.isfile() and not name.startswith(('test/', 'tests/', 'examples/', 'logo/')):
                 path = Path(name)
-                if path.suffix.lower() in {'.py', '.pyx', '.pxd', '.h', '.cpp', '.c', '.toml', '.cfg', '.in', '.cmake', '.md', '.yml', '.yaml', '.txt'} or path.name.startswith('LICENSE') or name == '.gitmodules':
+                if path.suffix.lower() in {'.py', '.pyx', '.pxd', '.h', '.cpp', '.c', '.toml', '.cfg', '.in', '.cmake', '.md', '.rst', '.yml', '.yaml', '.txt', '.ps1', '.json', '.cmd', '.bat', '.sh'} or path.name.startswith(('LICENSE', 'COPYING', 'NOTICE')) or name == '.gitmodules':
                     info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
                     info.compress_type = zipfile.ZIP_DEFLATED
                     output.writestr(info, archive.extractfile(member).read())
