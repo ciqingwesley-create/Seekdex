@@ -397,7 +397,8 @@
         "_internal/openvino/libs/tbb12.dll",
         "_internal/openvino/libs/tbbbind_2_5.dll",
         "_internal/openvino/libs/tbbmalloc.dll",
-        "_internal/openvino/libs/tbbmalloc_proxy.dll"
+        "_internal/openvino/libs/tbbmalloc_proxy.dll",
+        "_internal/openvino/libs/*.lib"
       ],
       "license": "Apache-2.0",
       "source": [],

@@ -27,11 +27,21 @@ def verify_environment(policy: dict) -> None:
             raise ValueError('Audited native wheel version changed: ' + name)
 
 
+def native_kind(path: Path) -> str | None:
+    with path.open('rb') as stream:
+        magic = stream.read(8)
+    if magic.startswith(b'MZ'):
+        return 'PE'
+    if magic == b'!<arch>\n':
+        return 'object/import archive'
+    return None
+
+
 def wheel_owners() -> dict[str, list[dict]]:
     result: dict[str, list[dict]] = {}
     for dist in metadata.distributions():
         for record in dist.files or ():
-            if Path(str(record)).suffix.lower() not in {'.dll', '.pyd', '.exe'}:
+            if Path(str(record)).suffix.lower() not in {'.dll', '.pyd', '.exe', '.lib', '.a', '.obj', '.o'}:
                 continue
             path = Path(dist.locate_file(record))
             if not path.is_file():
@@ -76,12 +86,13 @@ def scan(directory: Path, owners: dict | None = None, policy: dict | None = None
         name = path.relative_to(directory).as_posix()
         sha = digest(path)
         files.append({'path': name, 'bytes': path.stat().st_size, 'sha256': sha})
-        with path.open('rb') as stream:
-            magic = stream.read(2)
-        if magic != b'MZ':
+        kind = native_kind(path)
+        if kind is None:
             continue
+        details = pe_details(path) if kind == 'PE' else {
+            'pe_version': None, 'product_version': None, 'copyright': None, 'imports': []}
         row = {'path': name, 'sha256': sha, 'bytes': path.stat().st_size,
-               'owners': owners.get(sha, []), **pe_details(path)}
+               'native_kind': kind, 'owners': owners.get(sha, []), **details}
         matched = next((r for r in policy.get('rules', []) if any(
             fnmatch.fnmatchcase(name.lower(), pattern.lower()) for pattern in r['patterns'])), None)
         row['component'] = matched['component'] if matched else 'unreviewed'
@@ -98,6 +109,8 @@ def scan(directory: Path, owners: dict | None = None, policy: dict | None = None
     system = set(policy.get('windows_system_imports', []))
     unresolved = [name for name in external if name not in system and not name.startswith(('api-ms-win-', 'ext-ms-win-'))]
     return {'schema_version': 1, 'files': files, 'native': native, 'native_count': len(native),
+            'pe_count': sum(r['native_kind'] == 'PE' for r in native),
+            'object_archive_count': sum(r['native_kind'] == 'object/import archive' for r in native),
             'external_imports': external, 'unresolved_imports': unresolved,
             'status': 'BLOCKED' if unresolved or any(r['review_status'] != 'PASS' for r in native) else 'PASS'}
 
@@ -107,9 +120,7 @@ def verify_inventory(directory: Path, report: dict) -> None:
     actual = {}
     for path in directory.rglob('*'):
         if path.is_file():
-            with path.open('rb') as stream:
-                is_pe = stream.read(2) == b'MZ'
-            if is_pe:
+            if native_kind(path) is not None:
                 actual[path.relative_to(directory).as_posix()] = digest(path)
     expected = {row['path']: row['sha256'] for row in report['native']}
     if actual != expected:
@@ -154,7 +165,7 @@ def require_public_ready(report: dict, source_results: list[dict]) -> None:
 
 def write_csv(report: dict, path: Path) -> None:
     """Human-readable per-file evidence; keep nested provenance in the JSON."""
-    fields = ('path', 'component', 'version', 'version_evidence', 'sha256', 'bytes',
+    fields = ('path', 'native_kind', 'component', 'version', 'version_evidence', 'sha256', 'bytes',
               'selected_license', 'review_status', 'source', 'imports')
     with path.open('w', encoding='utf-8-sig', newline='') as stream:
         writer = csv.DictWriter(stream, fieldnames=fields)

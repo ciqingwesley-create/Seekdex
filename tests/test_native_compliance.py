@@ -20,6 +20,18 @@ def test_inventory_discovers_pe_regardless_of_extension(tmp_path, monkeypatch):
     assert report['status'] == 'BLOCKED'
 
 
+def test_inventory_includes_import_library_objects(tmp_path):
+    path = tmp_path / 'sdk.lib'
+    path.write_bytes(b'!<arch>\nsynthetic object')
+    report = compliance.scan(tmp_path, {})
+    assert report['native_count'] == report['object_archive_count'] == 1
+    assert report['pe_count'] == 0
+    compliance.verify_inventory(tmp_path, report)
+    path.write_bytes(b'!<arch>\nmodified object')
+    with pytest.raises(ValueError, match='inventory'):
+        compliance.verify_inventory(tmp_path, report)
+
+
 def test_unknown_transitive_import_blocks(tmp_path, monkeypatch):
     (tmp_path / 'plugin.dll').write_bytes(b'MZfake')
     monkeypatch.setattr(compliance, 'pe_details', lambda _: {
