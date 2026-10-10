@@ -49,6 +49,8 @@ def pe(provenance, *, installer=False):
                 FileVersion=app_info.VERSION, ProductVersion=app_info.VERSION,
                 FileDescription=installer_description(provenance) if installer else "Seekdex",
                 SourceCommit=provenance["commit"], Homepage=app_info.HOMEPAGE,
+                ProductName=f"Seekdex; source {provenance['commit']}",
+                LegalCopyright=f"{app_info.COPYRIGHT}; {provenance['homepage']}",
                 Comments=f"Seekdex source license: {app_info.LICENSE}; third-party licenses retained.")
 
 
@@ -74,6 +76,20 @@ def test_stale_installer_identity_is_rejected(provenance):
     resource["FileDescription"] = resource["FileDescription"].replace("GPL-3.0-only", "MIT")
     with pytest.raises(ValueError, match="Installer"):
         validate_pe(resource, provenance, installer=True)
+
+
+@pytest.mark.parametrize("field", ["ProductName", "LegalCopyright"])
+def test_truncated_installer_commit_or_homepage_rejected(provenance, field):
+    resource = pe(provenance, installer=True)
+    resource[field] = resource[field][:-1]
+    with pytest.raises(ValueError, match="Installer"):
+        validate_pe(resource, provenance, installer=True)
+
+
+def test_installer_metadata_fits_inno_fixed_capacity(provenance):
+    resource = pe(provenance, installer=True)
+    for key, limit in (("FileDescription", 60), ("ProductName", 60), ("LegalCopyright", 100)):
+        assert len(resource[key]) <= limit
 
 
 def test_manifest_only_planned_standard_pair():

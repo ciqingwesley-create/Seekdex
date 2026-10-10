@@ -73,10 +73,11 @@ def read_pe_identity(path: Path) -> dict:
     pointer, _ = query("\\VarFileInfo\\Translation")
     translation = ctypes.cast(pointer, ctypes.POINTER(wintypes.WORD))
     table = f"{translation[0]:04x}{translation[1]:04x}"
-    for key in ("FileVersion", "ProductVersion", "FileDescription", "Comments", "SourceCommit", "Homepage"):
+    for key in ("FileVersion", "ProductVersion", "FileDescription", "Comments", "SourceCommit", "Homepage",
+                "ProductName", "LegalCopyright"):
         try:
             pointer, _ = query(f"\\StringFileInfo\\{table}\\{key}")
-            result[key] = ctypes.wstring_at(pointer)
+            result[key] = ctypes.wstring_at(pointer).rstrip()
         except ValueError:
             result[key] = ""
     return result
@@ -91,7 +92,9 @@ def validate_pe(actual: dict, provenance: dict, *, installer: bool = False) -> N
             raise ValueError(f"EXE text version mismatch: {key}")
     if installer:
         expected = installer_description(provenance)
-        if actual.get("FileDescription") != expected:
+        if (actual.get("FileDescription") != expected
+                or actual.get("ProductName") != f"Seekdex; source {provenance['commit']}"
+                or actual.get("LegalCopyright") != f"{app_info.COPYRIGHT}; {provenance['homepage']}"):
             raise ValueError("Installer license/homepage/commit mismatch")
     elif (actual.get("SourceCommit") != provenance["commit"]
           or actual.get("Homepage") != provenance["homepage"]
@@ -100,7 +103,7 @@ def validate_pe(actual: dict, provenance: dict, *, installer: bool = False) -> N
 
 
 def installer_description(provenance: dict) -> str:
-    return f"Seekdex; {provenance['license_expression']}; {provenance['homepage']}; source {provenance['commit']}"
+    return f"Seekdex; {provenance['license_expression']}"
 
 
 def verify_frozen_identity() -> dict:

@@ -83,7 +83,7 @@ def main():
     numeric_version = ".".join(map(str, parts))
     (generated/"version.iss").write_text(f'#define ProductVersion "{version}"\n#define WindowsVersion "{numeric_version}"\n#define ProductName "{app_info.APP_NAME}"\n#define ProductPublisher "{app_info.AUTHOR}"\n#define ProductHomepage "{app_info.HOMEPAGE}"\n#define ProductLicense "{app_info.LICENSE}"\n',encoding="utf8")
     with (generated/"version.iss").open("a", encoding="utf8") as stream:
-        stream.write(f'#define SourceCommit "{head}"\n#define InstallerDescription "{installer_description(provenance)}"\n')
+        stream.write(f'#define SourceCommit "{head}"\n#define InstallerDescription "{installer_description(provenance)}"\n#define ProductCopyright "{app_info.COPYRIGHT}"\n')
     (generated/"license-notice.txt").write_text(f"Seekdex {version}: {app_info.LICENSE}\n\n"+(ROOT/"COPYRIGHT.md").read_text(encoding="utf8"),encoding="utf8")
     strings = {"CompanyName":app_info.AUTHOR,"FileDescription":app_info.DESCRIPTION,
         "FileVersion":version,"InternalName":app_info.APP_NAME,"LegalCopyright":app_info.COPYRIGHT,

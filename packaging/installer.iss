@@ -37,6 +37,9 @@ VersionInfoProductVersion={#WindowsVersion}
 VersionInfoProductTextVersion={#ProductVersion}
 VersionInfoTextVersion={#ProductVersion}
 VersionInfoDescription={#InstallerDescription}
+; The loader has fixed capacities: description/product 60, copyright 100 chars.
+VersionInfoProductName=Seekdex; source {#SourceCommit}
+VersionInfoCopyright={#ProductCopyright}; {#ProductHomepage}
 [InstallDelete]
 ; Upgrade compatibility: remove only the previous product's executable/shortcuts.
 Type: files; Name: "{app}\LocalImageSearch.exe"
