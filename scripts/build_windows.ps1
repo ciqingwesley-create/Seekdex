@@ -40,14 +40,18 @@ New-Item -ItemType Directory -Force -Path (Join-Path $workspaceRoot 'release') |
 # Portable smoke-test calls the EXE itself, never python -m.
 $checkRoot = Join-Path $workspaceRoot ('.verification\frozen-build-' + [Guid]::NewGuid().ToString('N'))
 $previousProfile = $env:SEEKDEX_HOME
+$previousQtPlatform = $env:QT_QPA_PLATFORM
 if (-not $SkipRuntimeVerification) { try {
+    # Headless pytest settings must not leak into the native Windows GUI probe.
+    Remove-Item Env:QT_QPA_PLATFORM -ErrorAction SilentlyContinue
     $env:SEEKDEX_HOME = Join-Path $checkRoot 'profile'
     $check = Start-Process -FilePath $portableExe -ArgumentList '--verify-runtime',('"'+$checkRoot+'"') -WindowStyle Hidden -PassThru
     if (-not $check.WaitForExit(180000)) { Stop-Process -Id $check.Id; throw 'Portable 验证超时。' }
     if ($check.ExitCode -ne 0 -or -not (Test-Path -LiteralPath (Join-Path $checkRoot 'report.json'))) { throw 'Portable 验证失败。' }
     $report = Get-Content -LiteralPath (Join-Path $checkRoot 'report.json') -Raw -Encoding UTF8 | ConvertFrom-Json
     if ($report.error) { throw ('Portable 验证失败：'+$report.error) }
-} finally { $env:SEEKDEX_HOME = $previousProfile } }
+    if ($report.platform -ne 'windows') { throw 'Portable 验证未使用 Windows 原生窗口。' }
+} finally { $env:SEEKDEX_HOME = $previousProfile; $env:QT_QPA_PLATFORM = $previousQtPlatform } }
 else { Write-Warning 'Runtime verification was explicitly skipped. These artifacts are not verified for release.' }
 $productVersion = & $pythonExe -c 'from seekdex.app_info import VERSION; print(VERSION)'
 # A build-only override reuses verified caches without migrating the real profile.
