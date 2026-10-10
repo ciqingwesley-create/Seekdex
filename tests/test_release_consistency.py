@@ -92,7 +92,13 @@ def test_standard_packages_reject_weights(name):
 
 
 def test_standard_libraries_are_allowed():
-    checks.standard_payload(["Seekdex.exe", "_internal/torch/lib/torch_cpu.dll", "LICENSE"])
+    checks.standard_payload(["Seekdex.exe", "_internal/torch/lib/torch_cpu.dll", "LICENSE",
+                             "_internal/onnxruntime/transformers/models/bart/__init__.py"])
+
+
+def test_binary_model_weight_in_library_tree_is_rejected():
+    with pytest.raises(ValueError, match="forbidden"):
+        checks.standard_payload(["_internal/rapidocr/models/pytorch_model.bin"])
 
 
 def test_dirty_build_rejected(monkeypatch):

@@ -35,7 +35,9 @@ def standard_payload(names) -> None:
     for name in names:
         path = Path(name)
         if (path.suffix.lower() in {".onnx", ".safetensors", ".pt", ".pth", ".ckpt"}
-                or any(part.lower() in {"preinstalled-models", "models", "model-cache", "hf-cache"} for part in path.parts)):
+                or path.parts[0].lower() == "models"
+                or any(part.lower() in {"preinstalled-models", "model-cache", "hf-cache"} for part in path.parts)
+                or path.name.lower() in {"pytorch_model.bin", "image.bin", "text.bin"}):
             raise ValueError(f"Model weights/cache forbidden in standard release: {name}")
 
 
