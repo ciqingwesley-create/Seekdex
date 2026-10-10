@@ -183,7 +183,7 @@ def test_seekdex_package_and_old_imports_removed():
     import seekdex
     from seekdex.app_info import APP_NAME, DISPLAY_NAME, VERSION, PACKAGE_VERSION
     assert APP_NAME == "Seekdex" and DISPLAY_NAME == "Seekdex · 索星仪"
-    assert VERSION == "0.5.0-rc1" and PACKAGE_VERSION == "0.5.0rc1"
+    assert VERSION == "0.5.0-rc2" and PACKAGE_VERSION == "0.5.0rc2"
     root = Path(__file__).parents[1]
     assert not (root / "src" / "local_image_search").exists()
     for path in (root / "src/seekdex").rglob("*.py"):

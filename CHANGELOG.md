@@ -2,6 +2,15 @@
 
 版本由 `src/seekdex/app_info.py` 统一提供，构建时自动生成版本化发布说明。
 
+## 0.5.0-rc2 — 发行内容一致性修复（2026-10-10）
+
+- 重新从干净、明确的 GPL-3.0-only 提交构建标准 Portable / Setup，修正 rc1 错附旧 MIT 二进制和旧主页地址的问题。
+- Python / GUI / EXE / 安装器版本同步，完整 GPL、README、版权、第三方通知与对应源码随包提供。
+- 强制核验实际 EXE、PE 版本、主页、源码 commit、源码归档和全部 Portable 文件；不一致即拒绝构建 / 发行验证。
+- 标准版 SHA256SUMS 仅包含计划公开的两个文件，不再混入未发布的预装版；不分发模型权重。
+- 不改变已有模型 / embedding / OCR 身份，无新用户功能。旧 MIT 授权不被追溯撤销，不改写 rc1 Tag 或旧附件。
+- rc2 发布文案与 rc1 被取代提示仅准备为草稿；干净 Windows 安装验证仍待完成。
+
 ## 2026-10-09 — Source license change
 
 - 项目自有源代码从 MIT 改为 GNU GPL v3.0，SPDX：**GPL-3.0-only**（仅第 3 版）。

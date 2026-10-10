@@ -12,14 +12,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--version",required=True)
     parser.add_argument("--hash-only",action="store_true")
+    parser.add_argument("--portable-only",action="store_true")
     parser.add_argument("--edition", choices=("standard", "preinstalled", "all"), default="standard")
     args = parser.parse_args()
+    from release_checks import planned_files, verify_receipt, verify_artifacts
+    from seekdex.app_info import VERSION
+    planned_files(args.version)
     release = ROOT/"release"
     release.mkdir(exist_ok=True)
     if not args.hash_only:
         directory = ROOT/"dist"/"Seekdex"
         from release_licenses import verify_directory
         verify_directory(directory)
+        verify_receipt(directory)
         editions = ("standard", "preinstalled") if args.edition == "all" else (args.edition,)
         for edition in editions:
             suffix = "-Preinstalled" if edition == "preinstalled" else ""
@@ -39,10 +44,17 @@ def main():
                 temporary.replace(target)
             finally:
                 temporary.unlink(missing_ok=True)
+    if args.hash_only and args.edition == "standard":
+        verification = verify_artifacts(release, ROOT / "dist/Seekdex", portable_only=args.portable_only)
+        (release / "release-consistency.json").write_text(json.dumps(verification, indent=2), encoding="utf8")
+    editions = ("standard", "preinstalled") if args.edition == "all" else (args.edition,)
+    selected = [name for edition in editions for name in planned_files(args.version, edition)]
     entries = []
-    for path in sorted(release.glob(f"Seekdex-{args.version}-Windows-x64-*")):
-        if path.suffix not in {".zip",".exe"}:continue
-        if args.edition != "all" and ("Preinstalled" in path.name) != (args.edition == "preinstalled"):
+    for name in selected:
+        path = release / name
+        if not path.is_file():
+            if args.hash_only and not args.portable_only:
+                raise ValueError(f"Missing planned release artifact: {name}")
             continue
         checksum = hashlib.sha256()
         with path.open("rb") as stream:
@@ -56,7 +68,8 @@ def main():
     provenance = json.loads((ROOT/"dist/Seekdex/source-provenance.json").read_text(encoding="utf8"))
     (release/"release-manifest.json").write_text(json.dumps(dict(version=args.version,license_expression=LICENSE,
         commit=provenance["commit"],source_sha256=provenance["source_sha256"],files=entries),indent=2),encoding="utf8")
-    notes = (ROOT/"CHANGELOG.md").read_text(encoding="utf8")
+    notes_file = ROOT / "docs" / f"release-v{VERSION}.md"
+    notes = (notes_file if notes_file.is_file() else ROOT/"CHANGELOG.md").read_text(encoding="utf8")
     (release/"RELEASE-NOTES.md").write_text(f"# Seekdex v{args.version}\n\n"+notes,encoding="utf8")
 
 if __name__=="__main__":main()

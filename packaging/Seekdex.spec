@@ -19,7 +19,7 @@ for package in ('openvino','rapidocr','onnxruntime','rawpy'):
     datas += data
     binaries += binary
     hiddenimports += hidden
-for package in ('transformers','huggingface_hub','safetensors','torch','numpy','rapidocr','openvino','onnxruntime','requests','tokenizers'):
+for package in ('seekdex','transformers','huggingface_hub','safetensors','torch','numpy','rapidocr','openvino','onnxruntime','requests','tokenizers'):
     datas += copy_metadata(package)
 hiddenimports += collect_submodules('transformers.models.chinese_clip')
 hiddenimports += collect_submodules('transformers.models.bert')

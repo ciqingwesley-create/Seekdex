@@ -10,6 +10,8 @@ $env:PYTHONPATH = Join-Path $workspaceRoot 'src'
 # Build with a controlled DLL search path: developer tools may ship an incompatible ICU.
 $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot;$env:SystemRoot\System32\Wbem;$gitDirectory;" + (Split-Path $pythonExe)
 if (-not (Test-Path -LiteralPath $pythonExe)) { throw '请先创建构建虚拟环境，参见 README 的 Build from source。' }
+& $pythonExe scripts/release_checks.py --preflight
+if ($LASTEXITCODE -ne 0) { throw '发行源码或构建环境不一致，停止构建。' }
 if (-not $SkipTests) {
     $testDirectory = Join-Path $workspaceRoot ('.verification\pytest-build-' + [Guid]::NewGuid().ToString('N'))
     & $pythonExe -m pytest -q --basetemp $testDirectory -p no:cacheprovider
@@ -30,6 +32,8 @@ $portableExe = Join-Path $workspaceRoot 'dist\Seekdex\Seekdex.exe'
 if (-not (Test-Path -LiteralPath $portableExe)) { throw 'Portable EXE 不存在。' }
 & $pythonExe scripts/release_licenses.py --stage
 if ($LASTEXITCODE -ne 0) { throw 'GPL 正文、通知或源码归档校验失败。' }
+& $pythonExe scripts/release_checks.py --verify-exe
+if ($LASTEXITCODE -ne 0) { throw '实际 EXE 版本、许可证、主页或源码提交不一致。' }
 New-Item -ItemType Directory -Force -Path (Join-Path $workspaceRoot 'release') | Out-Null
 # Portable smoke-test calls the EXE itself, never python -m.
 $checkRoot = Join-Path $workspaceRoot ('.verification\frozen-build-' + [Guid]::NewGuid().ToString('N'))
@@ -59,8 +63,14 @@ if (-not $SkipInstaller) {
     foreach ($buildEdition in $buildEditions) {
         & $InnoCompiler ("/DEdition=" + $buildEdition) packaging/installer.iss
         if ($LASTEXITCODE -ne 0) { throw ('安装包构建失败：' + $buildEdition) }
+        if ($buildEdition -eq 'Standard') {
+            $installerPath = Join-Path $workspaceRoot ('release\Seekdex-' + $productVersion + '-Windows-x64-Setup.exe')
+            & $pythonExe scripts/release_checks.py --record-installer $installerPath
+            if ($LASTEXITCODE -ne 0) { throw '安装器版本、许可证、主页或源码提交不一致。' }
+        }
     }
 }
-& $pythonExe scripts/package_release.py --version $productVersion --hash-only --edition $Edition.ToLowerInvariant()
+$finalOptions = if ($SkipInstaller) { @('--portable-only') } else { @() }
+& $pythonExe scripts/package_release.py --version $productVersion --hash-only --edition $Edition.ToLowerInvariant() @finalOptions
 if ($LASTEXITCODE -ne 0) { throw '生成 SHA256 失败。' }
 Get-ChildItem -LiteralPath (Join-Path $workspaceRoot 'release')

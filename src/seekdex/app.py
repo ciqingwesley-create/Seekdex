@@ -91,7 +91,18 @@ def main() -> int:
     parser.add_argument("--verify-migration",type=Path,help=argparse.SUPPRESS)
     parser.add_argument("--verify-downloads",action="store_true",help=argparse.SUPPRESS)
     parser.add_argument("--model-root",type=Path,help=argparse.SUPPRESS)
+    parser.add_argument("--verify-identity",type=Path,help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if args.verify_identity:
+        import json
+        from .release_identity import verify_frozen_identity
+        try:
+            result = verify_frozen_identity()
+        except Exception as exc:
+            result = dict(error=f"{type(exc).__name__}: {exc}")
+        args.verify_identity.parent.mkdir(parents=True, exist_ok=True)
+        args.verify_identity.write_text(json.dumps(result, indent=2), encoding="utf8")
+        return 1 if result.get("error") else 0
     app = QApplication(sys.argv)
     app.setApplicationName(APP_NAME)
     app.setApplicationVersion(VERSION)

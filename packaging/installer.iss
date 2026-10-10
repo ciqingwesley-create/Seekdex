@@ -36,6 +36,7 @@ VersionInfoVersion={#WindowsVersion}
 VersionInfoProductVersion={#WindowsVersion}
 VersionInfoProductTextVersion={#ProductVersion}
 VersionInfoTextVersion={#ProductVersion}
+VersionInfoDescription={#InstallerDescription}
 [InstallDelete]
 ; Upgrade compatibility: remove only the previous product's executable/shortcuts.
 Type: files; Name: "{app}\LocalImageSearch.exe"

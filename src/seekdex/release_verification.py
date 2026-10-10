@@ -136,6 +136,21 @@ class ReleaseVerification:
         assert len(license_text) > 30000
         self.report["license_expression"] = LICENSE
         self.record("complete_gplv3_license_and_metadata")
+        if getattr(sys, "frozen", False):
+            from .release_identity import verify_frozen_identity
+            self.report["release_identity"] = verify_frozen_identity()
+            self.record("actual_EXE_version_license_homepage_source_commit")
+        from .about import AboutDialog
+        from .app_info import HOMEPAGE
+        from PySide6.QtWidgets import QLabel
+        about = AboutDialog(self.window)
+        about.show()
+        yield lambda: about.isVisible()
+        labels = "\n".join(label.text() for label in about.findChildren(QLabel))
+        assert VERSION in about.version_label.text() and LICENSE in labels and HOMEPAGE in labels
+        about.grab().save(str(self.directory / "about.png"))
+        about.close()
+        self.record("packaged_About_version_GPL_homepage")
         wizard = self.window._wizard
         paths = iter([self.photos,self.photos/"sub",self.other])
         QFileDialog.getExistingDirectory = lambda *args,**kwargs:str(next(paths))
@@ -202,6 +217,16 @@ class ReleaseVerification:
         self.record("capture_date_filter")
         self.window.from_enabled.setChecked(False)
         self.window.to_enabled.setChecked(False)
+        self.query(filename="camera")
+        yield self.idle
+        assert [r.path.name for r in self.window.model.results] == ["camera.jpg"]
+        self.record("filename_filter")
+        self.window.extensions.setText("png")
+        self.query()
+        yield self.idle
+        assert {r.path.name for r in self.window.model.results} == {"screen.png", "chat.png"}
+        self.record("extension_filter")
+        self.window.extensions.clear()
         self.query()
         yield self.idle
         self.window.model.sort(3,Qt.DescendingOrder)

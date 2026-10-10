@@ -2,9 +2,9 @@
 APP_NAME = "Seekdex"
 DISPLAY_NAME = "Seekdex · 索星仪"
 APP_ID = "seekdex"
-VERSION = "0.5.0-rc1"
-PACKAGE_VERSION = "0.5.0rc1"
-WINDOWS_VERSION = (0, 5, 0, 1)
+VERSION = "0.5.0-rc2"
+PACKAGE_VERSION = "0.5.0rc2"
+WINDOWS_VERSION = (0, 5, 0, 2)
 RELEASE_STATUS = "Unsigned Release Candidate"
 AUTHOR = "ciqing wesley"
 HOMEPAGE = "https://github.com/ciqingwesley-create/Seekdex"

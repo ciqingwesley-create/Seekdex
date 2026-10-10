@@ -19,7 +19,7 @@ def main():
     generated = ROOT/"build"/"generated"
     generated.mkdir(parents=True,exist_ok=True)
     resources.mkdir(parents=True,exist_ok=True)
-    for name in ("LICENSE","COPYRIGHT.md","THIRD_PARTY_LICENSES.md","THIRD_PARTY_NOTICES.md"):
+    for name in ("LICENSE","README.md","COPYRIGHT.md","THIRD_PARTY_LICENSES.md","THIRD_PARTY_NOTICES.md"):
         shutil.copy2(ROOT/name,resources/name)
     os.environ.setdefault("QT_QPA_PLATFORM","offscreen")
     from PySide6.QtGui import QGuiApplication,QImage,QPainter
@@ -72,7 +72,8 @@ def main():
             if path.is_symlink() or not path.resolve().is_relative_to(ROOT.resolve()):
                 raise ValueError("Source snapshot path escapes checkout")
             archive.write(path, name)
-    provenance = dict(commit=head,version=app_info.VERSION,license_expression=app_info.LICENSE,
+    from seekdex.release_identity import identity, installer_description
+    provenance = dict(commit=head, **identity(),
         source_url=f"{app_info.HOMEPAGE}/tree/{head}",
         source_sha256=hashlib.sha256((resources/"application-source.zip").read_bytes()).hexdigest(),
         tracked_files=len(tracked))
@@ -81,11 +82,14 @@ def main():
     parts = app_info.WINDOWS_VERSION
     numeric_version = ".".join(map(str, parts))
     (generated/"version.iss").write_text(f'#define ProductVersion "{version}"\n#define WindowsVersion "{numeric_version}"\n#define ProductName "{app_info.APP_NAME}"\n#define ProductPublisher "{app_info.AUTHOR}"\n#define ProductHomepage "{app_info.HOMEPAGE}"\n#define ProductLicense "{app_info.LICENSE}"\n',encoding="utf8")
+    with (generated/"version.iss").open("a", encoding="utf8") as stream:
+        stream.write(f'#define SourceCommit "{head}"\n#define InstallerDescription "{installer_description(provenance)}"\n')
     (generated/"license-notice.txt").write_text(f"Seekdex {version}: {app_info.LICENSE}\n\n"+(ROOT/"COPYRIGHT.md").read_text(encoding="utf8"),encoding="utf8")
     strings = {"CompanyName":app_info.AUTHOR,"FileDescription":app_info.DESCRIPTION,
         "FileVersion":version,"InternalName":app_info.APP_NAME,"LegalCopyright":app_info.COPYRIGHT,
         "OriginalFilename":app_info.APP_NAME+".exe","ProductName":app_info.APP_NAME,"ProductVersion":version,
-        "Comments":f"Seekdex source license: {app_info.LICENSE}; third-party licenses retained."}
+        "Comments":f"Seekdex source license: {app_info.LICENSE}; third-party licenses retained.",
+        "SourceCommit":head,"Homepage":app_info.HOMEPAGE}
     text = f"VSVersionInfo(ffi=FixedFileInfo(filevers={parts!r},prodvers={parts!r},mask=0x3f,flags=0,OS=0x40004,fileType=1,subtype=0,date=(0,0)),kids=[StringFileInfo([StringTable('040904B0',["
     text += ",".join(f"StringStruct({key!r},{value!r})" for key,value in strings.items())
     text += "])]),VarFileInfo([VarStruct('Translation',[1033,1200])])])"

@@ -13,13 +13,15 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from seekdex.app_info import LICENSE as LICENSE_EXPRESSION, VERSION
+from seekdex.release_identity import validate_identity, validate_pe, read_pe_identity
 
-NOTICES = ("LICENSE", "COPYRIGHT.md", "THIRD_PARTY_LICENSES.md", "THIRD_PARTY_NOTICES.md")
+NOTICES = ("LICENSE", "README.md", "COPYRIGHT.md", "THIRD_PARTY_LICENSES.md", "THIRD_PARTY_NOTICES.md")
 
 
 def verify_source(data: bytes, provenance: dict) -> int:
     from io import BytesIO
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip()
+    validate_identity(provenance, commit=head)
     if provenance.get("commit") != head or provenance.get("license_expression") != "GPL-3.0-only":
         raise ValueError("Source commit/license does not match this checkout")
     if hashlib.sha256(data).hexdigest() != provenance.get("source_sha256"):
@@ -64,6 +66,7 @@ def verify_directory(directory: Path) -> dict:
     if provenance != json.loads((resources / "source-provenance.json").read_text(encoding="utf8")):
         raise ValueError("Source provenance copies differ")
     count = verify_source(source, provenance)
+    validate_pe(read_pe_identity(directory / "Seekdex.exe"), provenance)
     licenses = resources / "licenses"
     for name in ("dependencies.json", "RapidOCR-LICENSE.txt", "Chinese-CLIP-MIT.txt", "Inno-Setup-LICENSE.txt"):
         if not (licenses / name).is_file():

@@ -29,6 +29,7 @@ thumbnails/
 /settings.ini
 src/seekdex/resources/licenses/
 src/seekdex/resources/application-source.zip
+src/seekdex/resources/README.md
 src/seekdex/resources/source-provenance.json
 .env
 .env.*

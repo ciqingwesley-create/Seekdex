@@ -4,7 +4,7 @@
 
 **Seekdex · 索星仪**是一款开源、本地优先的智能文件与图片搜索工具。不止文件名的本地智能搜索。
 
-当前版本：**0.5.0-rc1 — Unsigned Release Candidate**，不是正式 0.5.0。Python 包版本为等价的 `0.5.0rc1`。Windows 是目前实际验证平台；Linux support planned，尚不声明官方支持。
+当前版本：**0.5.0-rc2 — Unsigned Release Candidate**，不是正式 0.5.0。Python 包版本为等价的 `0.5.0rc2`。Windows 是目前实际验证平台；Linux support planned，尚不声明官方支持。
 
 ## Introduction
 
@@ -65,13 +65,13 @@
 
 ## Installation
 
-运行 `Seekdex-0.5.0-rc1-Windows-x64-Setup.exe`。保留原稳定安装器 AppId；升级沿用已有安装目录，名称和快捷方式改为 Seekdex。卸载保留用户数据。
+运行 `Seekdex-0.5.0-rc2-Windows-x64-Setup.exe`。保留原稳定安装器 AppId；升级沿用已有安装目录，名称和快捷方式改为 Seekdex。卸载保留用户数据。
 
 Windows binaries currently unsigned. SmartScreen / Smart App Control may warn or block unsigned builds. 不要为了运行 RC 修改安全策略。实际升级 / 干净机验证范围见验证报告。
 
 ## Portable
 
-完整解压 `Seekdex-0.5.0-rc1-Windows-x64-Portable.zip`，运行 `Seekdex/Seekdex.exe`。不能仅复制 EXE，`_internal` 是必要运行库，无需另装 Python。
+完整解压 `Seekdex-0.5.0-rc2-Windows-x64-Portable.zip`，运行 `Seekdex/Seekdex.exe`。不能仅复制 EXE，`_internal` 是必要运行库，无需另装 Python。
 
 程序目录可搬移，数据默认仍在 LocalAppData。高级隔离环境用绝对路径 `SEEKDEX_HOME`，不会误导入真实用户旧数据。
 
@@ -153,6 +153,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build_windows.ps1
 - 未实现实时监控，磁盘变化需刷新索引。
 - Linux support planned，当前仅 Windows 实际验证。
 - 本公开候选历史从已清理源码重新开始；原私有历史与备份分开保留，不能直接公开原仓库。详见 [公开前审计](docs/pre-publication-audit.md)。
-- GitHub slug 尚未改名，项目 URLs 暂时保留现有私有仓库地址作为迁移前的有效链接。建议人工改为 `seekdex` 后更新 URLs。
+- 公开项目主页为 https://github.com/ciqingwesley-create/Seekdex ，旧私有历史不随发行分发。
 
-发布说明：[v0.5.0-rc1](docs/release-v0.5.0-rc1.md)。[CHANGELOG](CHANGELOG.md)。
+发布说明：[v0.5.0-rc2](docs/release-v0.5.0-rc2.md)。[CHANGELOG](CHANGELOG.md)。
+
+## RC2 release consistency
+
+rc2 修正 rc1 公开附件与源码 / GPL 许可证不一致的问题。标准发行不附模型权重；对应源 commit、版本、主页、GPL 文本及文件哈希由强制构建检查验证。见 [一致性检查](docs/release-consistency.md)、[rc2 发布说明](docs/release-v0.5.0-rc2.md) 与 [Windows QA](docs/windows-v0.5.0-release-qa-20261010.md)。干净 Windows 安装验证仍未完成。
